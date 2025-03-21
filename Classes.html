@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="common.css" />
  
   <style>
+
     .course-image {
       width: 100%;
       height: 180px;
@@ -93,7 +94,7 @@
       padding: 0 16px;
       align-items: center;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 5px;
     }
     
     .filter-label {
@@ -102,14 +103,16 @@
     }
     
     .filter-group {
+      font-size: small;
       display: flex;
       align-items: center;
-      flex-grow: 1;
+      flex-wrap: auto
       min-width: 200px;
     }
     
     .reset-button {
-      margin-left: 10px;
+      align-items: right;
+      margin-left: 3px;
     }
     
     .active-filter {
@@ -120,7 +123,7 @@
     .filter-chips {
       display: flex;
       padding: 0 16px 10px;
-      overflow-x: auto;
+      flex-wrap: auto
       gap: 8px;
     }
     
@@ -152,11 +155,14 @@
   <ion-app>
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title>Python 課程清單 v2</ion-title>
+        <ion-title>Python 課程教學</ion-title>
       </ion-toolbar>
+
+      <!--搜尋功能-->
       <ion-toolbar>
-        <ion-searchbar placeholder="搜尋課程標題或描述..." id="search-bar" debounce="300" animated></ion-searchbar>
+        <ion-searchbar placeholder="搜尋..." id="search-bar" debounce="300" animated></ion-searchbar>
       </ion-toolbar>
+      <!--分類程度功能-->
       <ion-toolbar>
         <div class="filter-container">
           <div class="filter-group">
@@ -168,10 +174,10 @@
               <ion-select-option value="進階">進階</ion-select-option>
             </ion-select>
           </div>
-          
+      <!--分類課程功能-->    
           <div class="filter-group">
-            <div class="filter-label">領域:</div>
-            <ion-select placeholder="選擇領域" id="domain-select" interface="popover">
+            <div class="filter-label">課程:</div>
+            <ion-select placeholder="選擇課程" id="domain-select" interface="popover">
               <ion-select-option value="">全部</ion-select-option>
               <ion-select-option value="基礎">基礎程式設計</ion-select-option>
               <ion-select-option value="數據">數據分析與處理</ion-select-option>
@@ -179,16 +185,15 @@
               <ion-select-option value="人工智能">人工智能與機器學習</ion-select-option>
             </ion-select>
           </div>
-          
-          <ion-button size="small" id="reset-filters" fill="outline" class="reset-button">
-            <ion-icon name="refresh" slot="start"></ion-icon>
-            重設篩選
-          </ion-button>
+      <!--refresh功能-->    
+      <ion-button size="small" id="reset-filters" fill="outline" class="reset-button">
+            <ion-icon name="refresh" size="small" slot="start"></ion-icon>
+            </ion-button>
         </div>
         
         <div class="filter-chips">
           <ion-chip outline id="all-filter" class="active-filter">
-            <ion-label>全部</ion-label>
+            <ion-label >全部</ion-label>
           </ion-chip>
           <ion-chip outline id="basic-filter">
             <ion-label>基礎語法</ion-label>
@@ -203,7 +208,7 @@
             <ion-label>人工智能</ion-label>
           </ion-chip>
           <ion-chip outline id="testing-filter">
-            <ion-label>測試與調試</ion-label>
+            <ion-label>測試</ion-label>
           </ion-chip>
         </div>
       </ion-toolbar>
