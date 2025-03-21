@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PYTHON教學</title>
+
+    <script 
+    type="module" 
+    src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js">
+  </script>
+    <script 
+    nomodule 
+    src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js">
+  </script>
+  <link 
+  rel="stylesheet" 
+  href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+
+  <link rel="stylesheet" href="theme.css" />
+  <link rel="stylesheet" href="common.css" />
+
+  <style>
+    body {
+      background-color: #A8D8B9; 
+      font-family: Arial, sans-serif;
+      color: #333; 
+    }
+    ion-header {
+      background-color: #609A7A; 
+      color: white; 
+    }
+    ion-searchbar {
+      --background: #ffffff; 
+      --color: #333; 
+      --placeholder-color: #888; 
+    }
+    ion-content {
+      --background: #E9F7F4; 
+    }
+    .item-content {
+      width: 100%;
+      padding: 16px;
+      border-radius: 8px;
+      background-color: #ffffff; 
+      margin-bottom: 10px; 
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    }
+    .item-title {
+      font-weight: bold;
+      margin: 0.25rem 0;
+      color: #609A7A; 
+    }
+    .item-subtitle {
+      color: var(--ion-color-medium);
+      font-size: 0.9em;
+    }
+    .tag-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+  </style>
+
+</head>
+
+
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar color = "primary">
+        <ion-title>課程搜尋</ion-title>
+      </ion-toolbar>
+
+      <!--加入 search bar-->
+      <ion-searchbar placeholder="搜尋..."></ion-searchbar>
+    </ion-item>
+      <!-- 根據主題加入分類選項 -->
+      <ion-select label="分類" interface="popover">
+        <ion-select-option value="">全部</ion-select-option>
+        <ion-select-option value="程式入門">程式入門</ion-select-option>
+        <ion-select-option value="進階課程">進階課程</ion-select-option>
+      </ion-select>
+      </ion-item>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <!-- 清單項目範本 -->
+        <ion-item class="list-item">
+          <div class="item-content">
+            <div class="item-title">標題</div>
+            <div class="item-subtitle">副標題</div>
+            <div class="item-details">詳細資訊</div>
+            <div class="tag-container">
+              <ion-chip size="small">分類</ion-chip>
+              <!-- 標籤 -->
+            </div>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+
+  </ion-app>
+
+  <script>
+const courseItems = [
+{
+  title: 'Python 基礎',
+  language: 'Python 3',
+  level: '入門',
+  details: '介紹 Python 語言的基本語法、數據類型和操作符。',
+  category: '程式入門',
+  tags: ['Python', '程式設計', '入門課程'],
+},
+{
+  title: '控制結構',
+  language: 'Python 3',
+  level: '入門',
+  details: '學習如何使用 if 語句、for 迴圈和 while 迴圈來控制程式流程。',
+  category: '程式入門',
+  tags: ['Python', '控制結構'],
+},
+{
+  title: '函數和模組',
+  language: 'Python 3',
+  level: '入門',
+  details: '了解如何定義和調用函數，並學習如何使用和創建模組來提高程式的可重用性。',
+  category: '程式入門',
+  tags: ['Python', '函數', '模組'],
+},
+//... (請根據上述課程列表添加其餘課程)
+{
+  title: '數據庫操作',
+  language: 'Python 3',
+  level: '進階',
+  details: '使用 SQLite 和 SQLAlchemy 進行數據庫操作和管理，了解 CRUD 操作。',
+  category: '進階課程',
+  tags: ['Python', '數據庫', 'SQL'],
+}
+];
+
+// 更新清單顯示
+function updateList() {
+const list = document.querySelector('ion-list');
+list.innerHTML = ''; // 清空現有列表
+
+const searchbar = document.querySelector('ion-searchbar');
+const searchTerm = searchbar.value.toLowerCase();
+const categorySelect = document.querySelector('ion-select');
+const selectedCategory = categorySelect.value;
+
+courseItems.forEach(item => {
+  // 過濾條件
+  const matchesSearch = item.title.toLowerCase().includes(searchTerm);
+  const matchesCategory = selectedCategory === '' || item.category === selectedCategory;
+
+  if (matchesSearch && matchesCategory) {
+    const listItem = document.createElement('ion-item');
+
+    listItem.innerHTML = `
+      <div class="item-content">
+        <div class="item-title">${item.title}</div>
+        <div class="item-subtitle">${item.level}</div>
+        <div class="item-details">${item.details}</div>
+        <div class="tag-container">
+          ${item.tags.map(tag => `<ion-chip size="small">${tag}</ion-chip>`).join('')}
+        </div>
+      </div>
+    `;
+    list.appendChild(listItem);
+  }
+});
+}
+
+// 監聽搜尋輸入事件
+const searchbar = document.querySelector('ion-searchbar');
+searchbar.addEventListener('ionInput', () => {
+updateList();
+});
+
+// 監聽分類選擇事件
+const categorySelect = document.querySelector('ion-select');
+categorySelect.addEventListener('ionChange', () => {
+updateList();
+});
+
+// 初始化，顯示所有項目
+updateList();
+
+  </script>
+    
+</body>
+</html>

@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PYTHON教學</title>
+
+  
+  <!-- Ionic Framework CDN -->
+  <script 
+  type="module" 
+  src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js">
+</script>
+
+  <script 
+  nomodule 
+  src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js">
+</script>
+
+<link 
+rel="stylesheet" 
+href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+
+<link rel="stylesheet" href="theme.css" />
+<link rel="stylesheet" href="common.css" />
+
+<style>
+      body {
+      background-color: #A8D8B9; 
+      font-family: Arial, sans-serif;
+      color: #333; 
+    }
+    ion-header {
+      background-color: #609A7A; 
+      color: white; 
+    }
+    ion-searchbar {
+      --background: #ffffff; 
+      --color: #333; 
+      --placeholder-color: #888; 
+    }
+    .item-content {
+      width: 100%;
+      padding: 16px;
+      border-radius: 8px;
+      background-color: #ffffff; 
+      margin-bottom: 10px; 
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    }
+    .item-title {
+      font-weight: bold;
+      margin: 0.25rem 0;
+      color: #609A7A; 
+    }
+    .item-subtitle {
+      color: var(--ion-color-medium);
+      font-size: 0.9em;
+    }
+    .tag-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+     
+    .course-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    
+    .video-thumbnail {
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .course-details {
+      margin-top: 10px;
+    }
+    
+    .course-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      color: var(--ion-color-medium);
+      font-size: 14px;
+    }
+    
+    .course-description {
+      margin-bottom: 10px;
+      color: var(--ion-color-dark);
+      font-size: 15px;
+    }
+    
+    .tag-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 8px;
+    }
+    
+    ion-chip {
+      font-size: 12px;
+    }
+    
+    .modal-video {
+      width: 100%;
+      height: 300px;
+    }
+    
+    @media (min-width: 768px) {
+      .modal-video {
+        height: 450px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Python 課程搜尋</ion-title>
+    </ion-toolbar>
+
+    <!--加入 search bar-->
+    <ion-searchbar placeholder="搜尋..."></ion-searchbar>
+  </ion-item>
+    <!-- 根據主題加入分類選項 -->
+    <ion-select label="分類" interface="popover">
+      <ion-select-option value="">全部</ion-select-option>
+      <ion-select-option value="入門">程式入門</ion-select-option>
+      <ion-select-option value="進階課程">進階課程</ion-select-option>
+    </ion-select>
+    </ion-item>
+    </ion-header>
+    
+    <ion-content>
+      <ion-list>
+        <!-- 1. Python 基礎 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=Python+基礎" alt="Python 基礎" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/rfscVS0vtbw', 'Python 基礎')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">Python 基礎</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 入門</span>
+                </div>
+                <div class="course-description">
+                  介紹 Python 語言的基本語法、數據類型和操作符。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>基礎語法</ion-chip>
+                  <ion-chip color="primary" outline>數據類型</ion-chip>
+                  <ion-chip color="primary" outline>操作符</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 2. 控制結構 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=控制結構" alt="控制結構" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/6iF8Xb7Z3wQ', '控制結構')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">控制結構</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 入門</span>
+                </div>
+                <div class="course-description">
+                  學習如何使用 if 語句、for 迴圈和 while 迴圈來控制程式流程。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>if 語句</ion-chip>
+                  <ion-chip color="primary" outline>for 迴圈</ion-chip>
+                  <ion-chip color="primary" outline>while 迴圈</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 3. 函數和模組 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=函數和模組" alt="函數和模組" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/9Os0o3wzS_I', '函數和模組')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">函數和模組</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 入門-中級</span>
+                </div>
+                <div class="course-description">
+                  了解如何定義和調用函數，並學習如何使用和創建模組來提高程式的可重用性。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>函數定義</ion-chip>
+                  <ion-chip color="primary" outline>模組導入</ion-chip>
+                  <ion-chip color="primary" outline>代碼重用</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 4. 資料結構 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=資料結構" alt="資料結構" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/R-HLU9Fl5ug', '資料結構')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">資料結構</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級</span>
+                </div>
+                <div class="course-description">
+                  深入學習 Python 的資料結構，包括列表、元組、集合和字典的使用。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>列表</ion-chip>
+                  <ion-chip color="primary" outline>元組</ion-chip>
+                  <ion-chip color="primary" outline>集合</ion-chip>
+                  <ion-chip color="primary" outline>字典</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 5. 文件操作 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=文件操作" alt="文件操作" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/Uh2ebFW8OYM', '文件操作')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">文件操作</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級</span>
+                </div>
+                <div class="course-description">
+                  學習如何讀取、寫入和處理文件，以管理資料和持久化數據。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>文件讀取</ion-chip>
+                  <ion-chip color="primary" outline>文件寫入</ion-chip>
+                  <ion-chip color="primary" outline>數據持久化</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 6. 錯誤和異常處理 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=錯誤和異常處理" alt="錯誤和異常處理" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/NIWwJbo-9_8', '錯誤和異常處理')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">錯誤和異常處理</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級</span>
+                </div>
+                <div class="course-description">
+                  介紹如何使用 try-except 語句來捕捉和處理異常，以提高程式的穩定性。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>try-except</ion-chip>
+                  <ion-chip color="primary" outline>異常捕捉</ion-chip>
+                  <ion-chip color="primary" outline>錯誤處理</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 7. 物件導向編程 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=物件導向編程" alt="物件導向編程" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/JeznW_7DlB0', '物件導向編程')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">物件導向編程</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級-進階</span>
+                </div>
+                <div class="course-description">
+                  理解物件導向編程的核心概念，包括類和對象、繼承和多態。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>類和對象</ion-chip>
+                  <ion-chip color="primary" outline>繼承</ion-chip>
+                  <ion-chip color="primary" outline>多態</ion-chip>
+                  <ion-chip color="primary" outline>封裝</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 8. 標準庫和第三方庫 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=標準庫和第三方庫" alt="標準庫和第三方庫" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/CqvZ3vGoGs0', '標準庫和第三方庫')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">標準庫和第三方庫</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級</span>
+                </div>
+                <div class="course-description">
+                  學習如何使用 Python 標準庫以及安裝和使用第三方庫來擴展應用功能。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>標準庫</ion-chip>
+                  <ion-chip color="primary" outline>pip</ion-chip>
+                  <ion-chip color="primary" outline>第三方庫</ion-chip>
+                  <ion-chip color="primary" outline>套件管理</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 9. 正則表達式 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=正則表達式" alt="正則表達式" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/K8L6KVGG-7o', '正則表達式')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">正則表達式</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級-進階</span>
+                </div>
+                <div class="course-description">
+                  掌握正則表達式的使用，以便進行模式匹配和文本處理。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>模式匹配</ion-chip>
+                  <ion-chip color="primary" outline>文本處理</ion-chip>
+                  <ion-chip color="primary" outline>re 模組</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 10. 網絡編程 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=網絡編程" alt="網絡編程" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/tb8gHvYlCFs', '網絡編程')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">網絡編程</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級</span>
+                </div>
+                <div class="course-description">
+                  介紹如何利用 Python 進行網絡請求、REST API 操作和數據抓取。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>HTTP 請求</ion-chip>
+                  <ion-chip color="primary" outline>REST API</ion-chip>
+                  <ion-chip color="primary" outline>requests 庫</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 11. 數據分析基礎 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=數據分析基礎" alt="數據分析基礎" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/vmEHCJofslg', '數據分析基礎')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">數據分析基礎</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級-進階</span>
+                </div>
+                <div class="course-description">
+                  使用 Pandas 和 NumPy 進行數據處理、分析及處理大數據的基礎。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>Pandas</ion-chip>
+                  <ion-chip color="primary" outline>NumPy</ion-chip>
+                  <ion-chip color="primary" outline>數據處理</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 12. 數據可視化 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=數據可視化" alt="數據可視化" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/a9UrKTVEeZA', '數據可視化')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">數據可視化</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級</span>
+                </div>
+                <div class="course-description">
+                  學習如何使用 Matplotlib 和 Seaborn 進行數據可視化，幫助理解數據。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>Matplotlib</ion-chip>
+                  <ion-chip color="primary" outline>Seaborn</ion-chip>
+                  <ion-chip color="primary" outline>圖表繪製</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 13. Web 開發基礎 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=Web+開發基礎" alt="Web 開發基礎" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/Z1RJmh_OqeA', 'Web 開發基礎')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">Web 開發基礎</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級</span>
+                </div>
+                <div class="course-description">
+                  使用 Flask 或 Django 框架建立簡單的 web 應用程序，了解後端開發。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>Flask</ion-chip>
+                  <ion-chip color="primary" outline>Django</ion-chip>
+                  <ion-chip color="primary" outline>後端開發</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 14. 測試和調試 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=測試和調試" alt="測試和調試" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/6tNS--WetLI', '測試和調試')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">測試和調試</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級</span>
+                </div>
+                <div class="course-description">
+                  學習如何使用單元測試和調試工具，保證代碼質量和可靠性。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>單元測試</ion-chip>
+                  <ion-chip color="primary" outline>pytest</ion-chip>
+                  <ion-chip color="primary" outline>調試技巧</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 15. API 開發 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=API+開發" alt="API 開發" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/qbLc5a9jdXo', 'API 開發')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">API 開發</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級-進階</span>
+                </div>
+                <div class="course-description">
+                  學習如何使用 Flask 或 Django 開發 RESTful API，並與前端交互。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>RESTful API</ion-chip>
+                  <ion-chip color="primary" outline>Flask-RESTful</ion-chip>
+                  <ion-chip color="primary" outline>Django REST</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 16. 機器學習基礎 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=機器學習基礎" alt="機器學習基礎" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/7eh4d6sabA0', '機器學習基礎')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">機器學習基礎</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 進階</span>
+                </div>
+                <div class="course-description">
+                  入門機器學習，學習使用 Scikit-learn 進行基本模型訓練與預測。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>Scikit-learn</ion-chip>
+                  <ion-chip color="primary" outline>模型訓練</ion-chip>
+                  <ion-chip color="primary" outline>預測分析</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 17. 自然語言處理 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=自然語言處理" alt="自然語言處理" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/X2vAabgKiuM', '自然語言處理')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">自然語言處理</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 進階</span>
+                </div>
+                <div class="course-description">
+                  使用 NLTK 或 SpaCy 進行文本處理和分析，處理自然語言數據。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>NLTK</ion-chip>
+                  <ion-chip color="primary" outline>SpaCy</ion-chip>
+                  <ion-chip color="primary" outline>文本分析</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 18. 桌面應用程序開發 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=桌面應用程序開發" alt="桌面應用程序開發" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/YXPyB4XeYLA', '桌面應用程序開發')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">桌面應用程序開發</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級</span>
+                </div>
+                <div class="course-description">
+                  使用 Tkinter 開發簡單的桌面應用程序，掌握 GUI 編程基礎。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>Tkinter</ion-chip>
+                  <ion-chip color="primary" outline>GUI 編程</ion-chip>
+                  <ion-chip color="primary" outline>桌面應用</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 19. 爬蟲技術 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=爬蟲技術" alt="爬蟲技術" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/XVv6mJpFOb0', '爬蟲技術')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">爬蟲技術</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級</span>
+                </div>
+                <div class="course-description">
+                  學習使用 Beautiful Soup 和 Scrapy 進行網頁爬蟲，提取網頁數據。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>Beautiful Soup</ion-chip>
+                  <ion-chip color="primary" outline>Scrapy</ion-chip>
+                  <ion-chip color="primary" outline>網頁數據提取</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        
+        <!-- 20. 數據庫操作 -->
+        <ion-item>
+          <ion-card style="width: 100%;">
+            <div class="video-thumbnail">
+              <img src="https://placehold.co/600x400/3880ff/ffffff?text=數據庫操作" alt="數據庫操作" class="course-image">
+              <div class="play-button" onclick="openVideoModal('https://www.youtube.com/embed/HXV3zeQKqGY', '數據庫操作')">
+                <ion-icon name="play" color="light" size="large"></ion-icon>
+              </div>
+            </div>
+            <ion-card-content>
+              <div class="course-details">
+                <div class="course-title">數據庫操作</div>
+                <div class="course-meta">
+                  <span>程式語言: Python 3.x</span>
+                  <span>程度: 中級</span>
+                </div>
+                <div class="course-description">
+                  使用 SQLite 和 SQLAlchemy 進行數據庫操作和管理，了解 CRUD 操作。
+                </div>
+                <div class="tag-container">
+                  <ion-chip color="primary" outline>SQLite</ion-chip>
+                  <ion-chip color="primary" outline>SQLAlchemy</ion-chip>
+                  <ion-chip color="primary" outline>CRUD 操作</ion-chip>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+    
+    <!-- 影片播放 Modal -->
+    <ion-modal id="video-modal">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title id="video-title">影片播放</ion-title>
+          <ion-buttons slot="end">
+            <ion-button id="close-modal">關閉</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div id="video-container" class="ion-padding">
+          <!-- 影片將在這裡顯示 -->
+        </div>
+      </ion-content>
+    </ion-modal>
+  </ion-app>
+  
+  <script>
+    // 獲取 Modal 元素
+    const videoModal = document.querySelector('#video-modal');
+    const videoTitle = document.querySelector('#video-title');
+    const videoContainer = document.querySelector('#video-container');
+    const closeModalBtn = document.querySelector('#close-modal');
+    
+    // 打開影片 Modal
+    function openVideoModal(videoUrl, title) {
+      videoTitle.textContent = title + ' - 影片播放';
+      videoContainer.innerHTML = `
+        <iframe class="modal-video" src="${videoUrl}" 
+          frameborder="0" allowfullscreen></iframe>
+      `;
+      videoModal.present();
+    }
+    
+    // 關閉 Modal 時清空影片
+    closeModalBtn.addEventListener('click', () => {
+      videoModal.dismiss();
+      // 清空影片容器，避免影片繼續播放
+      videoContainer.innerHTML = '';
+    });
+  </script>
+</body>
+</html>

@@ -71,47 +71,90 @@
     </ion-app>
 
     <script>
-        const items = [
+const courseItems = [
   {
-    title: 'Python 基礎入門', // 主標題
-    language: 'Python 3', // 程式語言
-    level: '入門', // 程度
-    details:
-      '從零開始學習 Python 程式設計，包含變數、流程控制、函式等基礎概念。', // 重點
-    category: '程式入門', // 分類
-    tags: ['Python', '程式設計', '入門課程'], // 標籤陣列
-    imageUrl: 'images/python-basics.jpg', // 課程封面圖
-    videoUrl: 'videos/python-intro.mp4', // 教學影片（本地檔案或 YouTube ID）
+    title: 'Python 基礎',
+    language: 'Python 3',
+    level: '入門',
+    details: '介紹 Python 語言的基本語法、數據類型和操作符。',
+    category: '程式入門',
+    tags: ['Python', '程式設計', '入門課程'],
   },
-  // ... 更多課程資料
-]
-
-// 初始化資料
-let items = [
-  /* 至少 20 筆資料 */
-]
+  {
+    title: '控制結構',
+    language: 'Python 3',
+    level: '入門',
+    details: '學習如何使用 if 語句、for 迴圈和 while 迴圈來控制程式流程。',
+    category: '程式入門',
+    tags: ['Python', '控制結構'],
+  },
+  {
+    title: '函數和模組',
+    language: 'Python 3',
+    level: '入門',
+    details: '了解如何定義和調用函數，並學習如何使用和創建模組來提高程式的可重用性。',
+    category: '程式入門',
+    tags: ['Python', '函數', '模組'],
+  },
+  //... (請根據上述課程列表添加其餘課程)
+  {
+    title: '數據庫操作',
+    language: 'Python 3',
+    level: '進階',
+    details: '使用 SQLite 和 SQLAlchemy 進行數據庫操作和管理，了解 CRUD 操作。',
+    category: '進階課程',
+    tags: ['Python', '數據庫', 'SQL'],
+  }
+];
 
 // 更新清單顯示
 function updateList() {
-  const list = document.querySelector('ion-list')
-  const template = document.querySelector('.list-item')
-  list.textContent = ''
+  const list = document.querySelector('ion-list');
+  list.innerHTML = ''; // 清空現有列表
 
-  // 根據搜尋和過濾條件更新清單
-  // ...
+  const searchbar = document.querySelector('ion-searchbar');
+  const searchTerm = searchbar.value.toLowerCase();
+  const categorySelect = document.querySelector('ion-select');
+  const selectedCategory = categorySelect.value;
+
+  courseItems.forEach(item => {
+    // 過濾條件
+    const matchesSearch = item.title.toLowerCase().includes(searchTerm);
+    const matchesCategory = selectedCategory === '' || item.category === selectedCategory;
+
+    if (matchesSearch && matchesCategory) {
+      const listItem = document.createElement('ion-item');
+
+      listItem.innerHTML = `
+        <div class="item-content">
+          <div class="item-title">${item.title}</div>
+          <div class="item-subtitle">${item.level}</div>
+          <div class="item-details">${item.details}</div>
+          <div class="tag-container">
+            ${item.tags.map(tag => `<ion-chip size="small">${tag}</ion-chip>`).join('')}
+          </div>
+        </div>
+      `;
+      list.appendChild(listItem);
+    }
+  });
 }
 
-const searchbar = document.querySelector('ion-searchbar')
-searchbar.addEventListener('ionInput', event => {
-  // 實作搜尋邏輯
-  updateList()
-})
+// 監聽搜尋輸入事件
+const searchbar = document.querySelector('ion-searchbar');
+searchbar.addEventListener('ionInput', () => {
+  updateList();
+});
 
-const categorySelect = document.querySelector('ion-select')
-categorySelect.addEventListener('ionChange', event => {
-  // 實作分類過濾邏輯
-  updateList()
-})
+// 監聽分類選擇事件
+const categorySelect = document.querySelector('ion-select');
+categorySelect.addEventListener('ionChange', () => {
+  updateList();
+});
+
+// 初始化，顯示所有項目
+updateList();
+
     </script>
   </body>
 </html>
