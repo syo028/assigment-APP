@@ -56,6 +56,7 @@
     .menu-instruction {
       margin-bottom: 20px;
       color: #555;
+      text-align: center;
     }
     
     .menu-button {
@@ -82,6 +83,78 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       padding: 15px 20px;
       background-color: white;
+      text-align: center;
+    }
+    
+    .promotion-section {
+      margin-top: 30px;
+      padding: 0 20px;
+    }
+    
+    .promotion-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #333;
+      text-align: center;
+    }
+    
+    .promotion-slide {
+      background-color: #f8f8f8;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    .promotion-image {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    
+    .promotion-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .promotion-date {
+      color: #777;
+      font-size: 14px;
+    }
+    
+    .promotion-button {
+      margin-top: 10px;
+      width: 100%;
+    }
+    
+    /* Registration Modal Styles */
+    .registration-form {
+      padding: 20px;
+    }
+    
+    .form-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .swiper-container {
+      width: 100%;
+      height: 220px;
+    }
+    
+    .swiper-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80%;
     }
   </style>
 </head>
@@ -89,38 +162,216 @@
 <body>
   <ion-app>
     <div class="header">
-      <div class="menu-title">Menu</div>
+      <div class="menu-title">Python 學習平台</div>
     </div>
     
     <ion-content>
       <div class="menu-container">
         <div class="logo-container">
-          <img src="public/src/logo.png" alt="Python 學習平台 Logo" class="logo">
+          <img src="https://placehold.co/400x400/568203/FFFFFF?text=Python" alt="Python 學習平台 Logo" class="logo">
         </div>
         
         <p class="menu-instruction">Tap a button below to open a specific menu.</p>
         
-        <button class="menu-button" onclick="openMenu('first')">Open First Menu</button>
-        <button class="menu-button" onclick="openMenu('second')">Open Second Menu</button>
-        <button class="menu-button" onclick="openMenu('end')">Open End Menu</button>
+        <button class="menu-button" id="open-registration">Registration</button>
+        <button class="menu-button" onclick="openAllClasses()">All Classes</button>
+        <button class="menu-button" onclick="openMyPage()">My Page</button>
+      </div>
+      
+      <div class="promotion-section">
+        <div class="promotion-title">Today's Events & Promotions</div>
+        
+        <!-- Swiper container for the sliding promotions -->
+        <div class="swiper-container" id="promotion-slider">
+          <div class="swiper-wrapper">
+            <!-- Promotion Slide 1 -->
+            <div class="swiper-slide">
+              <div class="promotion-slide">
+                <div>
+                  <img src="https://placehold.co/600x400/568203/FFFFFF?text=Python+Workshop" class="promotion-image" alt="Python Workshop">
+                  <div class="promotion-name">Python for Beginners Workshop</div>
+                  <div class="promotion-date">Today, 14:00 - 16:00</div>
+                </div>
+                <ion-button expand="block" size="small" color="primary" class="promotion-button">
+                  Learn More
+                </ion-button>
+              </div>
+            </div>
+            
+            <!-- Promotion Slide 2 -->
+            <div class="swiper-slide">
+              <div class="promotion-slide">
+                <div>
+                  <img src="https://placehold.co/600x400/8CB369/FFFFFF?text=Data+Science" class="promotion-image" alt="Data Science Course">
+                  <div class="promotion-name">Data Science Course - 30% OFF</div>
+                  <div class="promotion-date">Limited offer - Ends today!</div>
+                </div>
+                <ion-button expand="block" size="small" color="primary" class="promotion-button">
+                  Get Discount
+                </ion-button>
+              </div>
+            </div>
+            
+            <!-- Promotion Slide 3 -->
+            <div class="swiper-slide">
+              <div class="promotion-slide">
+                <div>
+                  <img src="https://placehold.co/600x400/BFD58C/FFFFFF?text=AI+Webinar" class="promotion-image" alt="AI Webinar">
+                  <div class="promotion-name">AI with Python Webinar</div>
+                  <div class="promotion-date">Tomorrow, 19:00 - 20:30</div>
+                </div>
+                <ion-button expand="block" size="small" color="primary" class="promotion-button">
+                  Register Now
+                </ion-button>
+              </div>
+            </div>
+            
+            <!-- Promotion Slide 4 -->
+            <div class="swiper-slide">
+              <div class="promotion-slide">
+                <div>
+                  <img src="https://placehold.co/600x400/568203/FFFFFF?text=New+Course" class="promotion-image" alt="New Course">
+                  <div class="promotion-name">New Course: Web Development with Django</div>
+                  <div class="promotion-date">Launching next week</div>
+                </div>
+                <ion-button expand="block" size="small" color="primary" class="promotion-button">
+                  Pre-register
+                </ion-button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Add pagination -->
+          <div class="swiper-pagination"></div>
+        </div>
       </div>
     </ion-content>
+    
+    <!-- Registration Modal -->
+    <ion-modal trigger="open-registration">
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Registration</ion-title>
+          <ion-buttons slot="end">
+            <ion-button onclick="dismissRegistrationModal()">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="registration-form">
+          <div class="form-title">Create Your Account</div>
+          
+          <ion-item>
+            <ion-label position="floating">Full Name</ion-label>
+            <ion-input type="text" required></ion-input>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" required></ion-input>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input type="password" required></ion-input>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label position="floating">Confirm Password</ion-label>
+            <ion-input type="password" required></ion-input>
+          </ion-item>
+          
+          <ion-button expand="block" color="primary" style="margin-top: 20px;">
+            Register
+          </ion-button>
+          
+          <p style="text-align: center; margin-top: 20px; color: #777;">
+            Already have an account? <a href="#" style="color: var(--ion-color-primary);">Sign In</a>
+          </p>
+        </div>
+      </ion-content>
+    </ion-modal>
+    
+    <!-- Login Check Alert -->
+    <ion-alert id="login-alert" 
+      header="Login Required" 
+      message="You need to be logged in to access My Page."
+      buttons={[
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Login',
+          handler: () => {
+            console.log('Login clicked');
+            // Here you would redirect to login page
+          }
+        }
+      ]}>
+    </ion-alert>
   </ion-app>
   
   <script>
-    function openMenu(menuType) {
-      // 在這裡可以添加打開不同菜單的邏輯
-      alert(`Opening the ${menuType} menu`);
+    // Initialize the slider when the DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize Swiper slider
+      const swiper = new Swiper('#promotion-slider', {
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        spaceBetween: 20,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        loop: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+      });
       
-      // 如果要導航到不同頁面，可以使用以下代碼
-      // if (menuType === 'first') {
-      //   window.location.href = 'first-menu.html';
-      // } else if (menuType === 'second') {
-      //   window.location.href = 'second-menu.html';
-      // } else if (menuType === 'end') {
-      //   window.location.href = 'end-menu.html';
-      // }
+      // Get the login alert element
+      const loginAlert = document.querySelector('#login-alert');
+      
+      // Set up event listeners for the modal
+      const registrationModal = document.querySelector('ion-modal');
+      
+      // Function to dismiss the registration modal
+      window.dismissRegistrationModal = function() {
+        registrationModal.dismiss();
+      };
+    });
+    
+    // Function to open All Classes page
+    function openAllClasses() {
+      window.location.href = 'classes.html';
+    }
+    
+    // Function to check if user is logged in and open My Page
+    function openMyPage() {
+      // Check if user is logged in (this is a simple example, you would use a more robust method)
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      
+      if (isLoggedIn) {
+        // If logged in, navigate to my page
+        window.location.href = 'my-page.html';
+      } else {
+        // If not logged in, show alert
+        const loginAlert = document.querySelector('#login-alert');
+        loginAlert.present();
+      }
+    }
+    
+    // For demo purposes - function to toggle login state
+    function toggleLoginState() {
+      const currentState = localStorage.getItem('isLoggedIn') === 'true';
+      localStorage.setItem('isLoggedIn', !currentState);
+      alert(`Login state changed to: ${!currentState ? 'Logged In' : 'Logged Out'}`);
     }
   </script>
+  
+  <!-- Add Swiper JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 </body>
 </html>

@@ -135,6 +135,20 @@
       color: var(--ion-color-medium);
       margin-bottom: 16px;
     }
+
+    .icon-link {
+            position: absolute; /* Absolute positioning */
+            top: 10px; /* Distance from the top */
+            right: 10px; /* Distance from the right */
+            display: flex; /* Flexbox for centering */
+            align-items: center; /* Center icon and text vertically */
+            text-decoration: none; /* Remove underline */
+            color: #007bff; /* Icon color */
+            font-size: 24px; /* Icon size */
+        }
+
+
+  
   </style>
 </head>
 
@@ -143,6 +157,9 @@
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>Python 課程清單 v2</ion-title>
+        <a href="index.html" class="icon-link">
+          <ion-icon name="arrow-back-circle-outline"></ion-icon>
+      </a>
       </ion-toolbar>
       <ion-toolbar>
         <ion-searchbar placeholder="搜尋課程標題或描述..." id="search-bar" debounce="300" animated></ion-searchbar>
