@@ -158,9 +158,10 @@
       </ion-toolbar>
 
       <!--搜尋功能-->
-      <ion-toolbar>
-        <ion-searchbar placeholder="搜尋..." id="search-bar" debounce="300" animated></ion-searchbar>
-      </ion-toolbar>
+      <ion-searchbar
+        id="search-bar"
+        placeholder="搜尋..."
+      ></ion-searchbar>
       <!--分類程度功能-->
       <ion-toolbar>
         <div class="filter-container">
@@ -481,15 +482,16 @@
       
       // 篩選課程
       let filteredCourses = courseItems.filter(item => {
+      
         // 搜尋條件
         const matchesSearch = searchTerm === '' || 
-                             item.title.toLowerCase().includes(searchTerm) || 
-                             item.description.toLowerCase().includes(searchTerm);
+         item.title.toLowerCase().includes(searchTerm) || 
+         item.description.toLowerCase().includes(searchTerm);
         
         // 程度篩選
         const matchesLevel = selectedLevel === '' || item.level.includes(selectedLevel);
         
-        // 領域篩選
+        // 課程篩選
         const matchesDomain = selectedDomain === '' || item.domain === selectedDomain;
         
         // 標籤篩選
@@ -498,7 +500,7 @@
         return matchesSearch && matchesLevel && matchesDomain && matchesTag;
       });
       
-      // 渲染篩選後的課程
+      // 篩選後的課程
       if (filteredCourses.length > 0) {
         filteredCourses.forEach(item => {
           const listItem = document.createElement('ion-item');
@@ -545,7 +547,7 @@
           <h2>沒有找到符合條件的課程</h2>
           <p>請嘗試調整搜尋條件或分類篩選</p>
           <ion-button color="primary" onclick="resetAllFilters()">
-            <ion-icon name="refresh" slot="start"></ion-icon>
+            <ion-icon name="refresh" slot="end"></ion-icon>
             重設所有篩選
           </ion-button>
         `;
@@ -590,7 +592,7 @@
     // 按標籤篩選
     function filterByTag(tag) {
       if (currentFilters.tag === tag) {
-        // 如果點擊的是當前已選標籤，則取消篩選
+   // 如果點擊的是當前已選標籤，則取消篩選
         currentFilters.tag = '';
       } else {
         currentFilters.tag = tag;
@@ -628,32 +630,32 @@
     // 關閉 Modal 時清空影片
     closeModalBtn.addEventListener('click', () => {
       videoModal.dismiss();
-      // 清空影片容器，避免影片繼續播放
+    // 清空影片容器，避免影片繼續播放
       videoContainer.innerHTML = '';
     });
     
-    // 監聽搜尋輸入事件
+    // Listen - 搜尋輸入
     searchBar.addEventListener('ionInput', (event) => {
       currentFilters.searchTerm = event.target.value || '';
       updateList();
     });
     
-    // 監聽程度選擇事件
+    // Listen - 程度選擇
     levelSelect.addEventListener('ionChange', (event) => {
       currentFilters.level = event.detail.value || '';
       updateList();
     });
     
-    // 監聽領域選擇事件
+    // Listen - 課程選擇
     domainSelect.addEventListener('ionChange', (event) => {
       currentFilters.domain = event.detail.value || '';
       updateList();
     });
     
-    // 監聽重設篩選按鈕
+    // Listen - refresh button
     resetFiltersBtn.addEventListener('click', resetAllFilters);
     
-    // 監聽標籤篩選器點擊
+    // Listen - filter button
     allFilter.addEventListener('click', () => {
       currentFilters.tag = '';
       updateList();

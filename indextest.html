@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python 學習平台</title>
+  
+  <!-- Ionic Framework CDN -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+  
+  <style>
+    :root {
+      --ion-color-primary: #568203;
+      --ion-color-primary-rgb: 86, 130, 3;
+      --ion-color-primary-contrast: #ffffff;
+      --ion-color-primary-contrast-rgb: 255, 255, 255;
+      --ion-color-primary-shade: #4c7203;
+      --ion-color-primary-tint: #67901c;
+      
+      --button-bg-color: #8CB369;
+      --button-hover-bg-color: #568203;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    
+    .menu-container {
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    .logo-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+    
+    .logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid var(--ion-color-primary);
+      padding: 10px;
+    }
+    
+    .menu-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    .menu-instruction {
+      margin-bottom: 20px;
+      color: #555;
+    }
+    
+    .menu-button {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      margin-bottom: 12px;
+      background-color: var(--button-bg-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .menu-button:hover {
+      background-color: var(--button-hover-bg-color);
+    }
+    
+    .header {
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 15px 20px;
+      background-color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+    <div class="header">
+      <div class="menu-title">Menu</div>
+    </div>
+    
+    <ion-content>
+      <div class="menu-container">
+        <div class="logo-container">
+          <img src="public/src/logo.png" alt="Python 學習平台 Logo" class="logo">
+        </div>
+        
+        <p class="menu-instruction">Tap a button below to open a specific menu.</p>
+        
+        <button class="menu-button" onclick="openMenu('first')">Open First Menu</button>
+        <button class="menu-button" onclick="openMenu('second')">Open Second Menu</button>
+        <button class="menu-button" onclick="openMenu('end')">Open End Menu</button>
+      </div>
+    </ion-content>
+  </ion-app>
+  
+  <script>
+    function openMenu(menuType) {
+      // 在這裡可以添加打開不同菜單的邏輯
+      alert(`Opening the ${menuType} menu`);
+      
+      // 如果要導航到不同頁面，可以使用以下代碼
+      // if (menuType === 'first') {
+      //   window.location.href = 'first-menu.html';
+      // } else if (menuType === 'second') {
+      //   window.location.href = 'second-menu.html';
+      // } else if (menuType === 'end') {
+      //   window.location.href = 'end-menu.html';
+      // }
+    }
+  </script>
+</body>
+</html>

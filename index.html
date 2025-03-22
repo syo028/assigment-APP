@@ -19,12 +19,51 @@
 
   <link rel="stylesheet" href="theme.css" />
   <link rel="stylesheet" href="common.css" />
+<style>
+  body {
+    background-color: #A8D8B9; /* 牛油果色背景 */
+    font-family: Arial, sans-serif; /* 字體 */
+    color: #333; /* 文字顏色 */
+    text-align: center; /* 文字置中 */
+}
+.logo {
+    margin: 20px 0;
+    width: 150px; /* Logo 寬度 */
+    border-radius: 8px; /* 圓角 */
+}
+.menu-title {
+    font-size: 24px; /* 標題尺寸 */
+    font-weight: bold; /* 標題加粗 */
+    margin: 20px 0; /* 標題外邊距 */
+}
+.btn {
+    background-color: #609A7A; /* 深牛油果色背景 */
+    color: white; /* 按鈕文字顏色 */
+    border-radius: 20px; /* 按鈕圓角 */
+    padding: 10px 20px; /* 按鈕內邊距 */
+    margin: 10px 0; /* 按鈕外邊距 */
+    width: 80%; /* 按鈕寬度 */
+    border: none; /* 按鈕邊框 */
+    cursor: pointer; /* 滑鼠手指樣式 */
+}
+.btn:hover {
+    background-color: #507A5C; /* 滑鼠懸停時的顏色 */
+}
+</style>
 
 
 
 </head>
 <body>
     <ion-app>
+      <ion-header>
+        <ion-toolbar>
+            <ion-title>Python 程式教學</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+        <img src="public\src.logo.png" alt="Logo" class="logo" />
         <ion-menu menu-id="first-menu" content-id="main-content">
             <ion-header>
               <ion-toolbar>
@@ -52,14 +91,7 @@
             <ion-content class="ion-padding">This is the end menu content.</ion-content>
           </ion-menu>
           
-          <div class="ion-page" id="main-content">
-            <ion-header>
-              <ion-toolbar>
-                <ion-title>Menu</ion-title>
-              </ion-toolbar>
-            </ion-header>
-            <ion-content class="ion-padding">
-              <p>Tap a button below to open a specific menu.</p>
+
           
               <ion-button expand="block" onclick="openFirstMenu()">Open First Menu</ion-button>
               <ion-button expand="block" onclick="openSecondMenu()">Open Second Menu</ion-button>
