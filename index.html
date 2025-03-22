@@ -24,14 +24,26 @@
 body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
-.logo {
+
+    .menu-container {
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    .logo-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .logo {
       width: 120px;
       height: 120px;
       border-radius: 50%;
       border: 4px solid var(--ion-color-primary);
       padding: 10px;
     }
-.menu-title {
+    .menu-title {
       font-size: 24px;
       font-weight: bold;
       margin-bottom: 20px;
@@ -58,8 +70,8 @@ body {
       cursor: pointer;
       transition: background-color 0.3s;
     }
-.btn:hover {
-  background-color: var(--button-hover-bg-color);
+    .menu-button:hover {
+      background-color: var(--button-hover-bg-color);
   }
 
 </style>
@@ -76,7 +88,7 @@ body {
     <ion-content>
       <div class="menu-container">
         <div class="logo-container">
-        <img src="public\src.logo.png" alt="Logo" class="logo">
+          <img src="public/src/logo.png" alt="Python 學習平台 Logo" class="logo">
         </div>
 
         <ion-menu menu-id="first-menu" content-id="main-content">
