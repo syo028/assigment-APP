@@ -1,16 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python 課程清單 v2</title>
-  
-  <!-- Ionic Framework CDN -->
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PYTHON教學</title>
+
+    <script 
+    type="module" 
+    src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js">
+  </script>
+    <script 
+    nomodule 
+    src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js">
+  </script>
+  <link 
+  rel="stylesheet" 
+  href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+
+  <link rel="stylesheet" href="theme.css" />
+  <link rel="stylesheet" href="common.css" />
+ 
   <style>
+
+    .icon-link {
+            position: absolute; 
+            top: 10px; 
+            right: 10px;
+            display: flex; 
+            align-items: center; 
+            text-decoration: none; 
+            color: #0163aa; 
+            font-size: 24px; 
+        }
+
     .course-image {
       width: 100%;
       height: 180px;
@@ -83,7 +105,7 @@
       padding: 0 16px;
       align-items: center;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 5px;
     }
     
     .filter-label {
@@ -92,14 +114,15 @@
     }
     
     .filter-group {
+      font-size: small;
       display: flex;
       align-items: center;
-      flex-grow: 1;
+      flex-wrap: auto
       min-width: 200px;
     }
     
     .reset-button {
-      margin-left: 10px;
+      margin-left: 3px;
     }
     
     .active-filter {
@@ -110,7 +133,7 @@
     .filter-chips {
       display: flex;
       padding: 0 16px 10px;
-      overflow-x: auto;
+      flex-wrap: auto
       gap: 8px;
     }
     
@@ -135,20 +158,47 @@
       color: var(--ion-color-medium);
       margin-bottom: 16px;
     }
-
-    .icon-link {
-            position: absolute; /* Absolute positioning */
-            top: 10px; /* Distance from the top */
-            right: 10px; /* Distance from the right */
-            display: flex; /* Flexbox for centering */
-            align-items: center; /* Center icon and text vertically */
-            text-decoration: none; /* Remove underline */
-            color: #007bff; /* Icon color */
-            font-size: 24px; /* Icon size */
-        }
-
-
-  
+    
+    .favorite-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .favorite-button:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(1.1);
+    }
+    
+    .favorite-button ion-icon {
+      font-size: 22px;
+      color: #f44336;
+    }
+    
+    .favorite-button.active ion-icon {
+      color: #f44336;
+    }
+    
+    .favorite-button:not(.active) ion-icon {
+      color: #999;
+    }
+    
+    .course-actions {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background-color: #f5f5f5;
+    }
   </style>
 </head>
 
@@ -156,14 +206,19 @@
   <ion-app>
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title>Python 課程清單 v2</ion-title>
+        <ion-title>Python 課程教學</ion-title>
         <a href="index.html" class="icon-link">
           <ion-icon name="arrow-back-circle-outline"></ion-icon>
       </a>
+        
       </ion-toolbar>
-      <ion-toolbar>
-        <ion-searchbar placeholder="搜尋課程標題或描述..." id="search-bar" debounce="300" animated></ion-searchbar>
-      </ion-toolbar>
+
+      <!--搜尋功能-->
+      <ion-searchbar
+        id="search-bar"
+        placeholder="搜尋..."
+      ></ion-searchbar>
+      <!--分類程度功能-->
       <ion-toolbar>
         <div class="filter-container">
           <div class="filter-group">
@@ -174,10 +229,11 @@
               <ion-select-option value="中級">中級</ion-select-option>
               <ion-select-option value="進階">進階</ion-select-option>
             </ion-select>
-               
+          </div>
+      <!--分類課程功能-->    
           <div class="filter-group">
-            <div class="filter-label">領域:</div>
-            <ion-select placeholder="選擇領域" id="domain-select" interface="popover">
+            <div class="filter-label">課程:</div>
+            <ion-select placeholder="選擇課程" id="domain-select" interface="popover">
               <ion-select-option value="">全部</ion-select-option>
               <ion-select-option value="基礎">基礎程式設計</ion-select-option>
               <ion-select-option value="數據">數據分析與處理</ion-select-option>
@@ -185,16 +241,15 @@
               <ion-select-option value="人工智能">人工智能與機器學習</ion-select-option>
             </ion-select>
           </div>
-          
-          <ion-button size="small" id="reset-filters" fill="outline" class="reset-button">
-            <ion-icon name="refresh" slot="start"></ion-icon>
-            重設篩選
-          </ion-button>
+      <!--refresh功能-->    
+      <ion-button size="small" id="reset-filters" fill="outline" class="reset-button">
+            <ion-icon name="refresh" size="small" slot="start"></ion-icon>
+            </ion-button>
         </div>
         
         <div class="filter-chips">
           <ion-chip outline id="all-filter" class="active-filter">
-            <ion-label>全部</ion-label>
+            <ion-label >全部</ion-label>
           </ion-chip>
           <ion-chip outline id="basic-filter">
             <ion-label>基礎語法</ion-label>
@@ -209,7 +264,7 @@
             <ion-label>人工智能</ion-label>
           </ion-chip>
           <ion-chip outline id="testing-filter">
-            <ion-label>測試與調試</ion-label>
+            <ion-label>測試</ion-label>
           </ion-chip>
         </div>
       </ion-toolbar>
@@ -471,6 +526,78 @@
       tag: ''
     };
     
+    // 從 localStorage 獲取收藏課程
+    function getFavoriteCourses() {
+      return JSON.parse(localStorage.getItem('favoriteCourses')) || [];
+    }
+    
+    // 檢查課程是否已收藏
+    function isFavorite(courseId) {
+      const favorites = getFavoriteCourses();
+      return favorites.some(course => course.id === courseId);
+    }
+    
+    // 添加課程到收藏
+    function addToFavorites(course) {
+      let favorites = getFavoriteCourses();
+      
+      // 檢查是否已經收藏
+      if (!favorites.some(item => item.id === course.id)) {
+        favorites.push(course);
+        localStorage.setItem('favoriteCourses', JSON.stringify(favorites));
+        
+        // 顯示成功提示
+        showToast('課程已加入收藏');
+        return true;
+      }
+      return false;
+    }
+    
+    // 從收藏中移除課程
+    function removeFromFavorites(courseId) {
+      let favorites = getFavoriteCourses();
+      const newFavorites = favorites.filter(course => course.id !== courseId);
+      
+      if (newFavorites.length !== favorites.length) {
+        localStorage.setItem('favoriteCourses', JSON.stringify(newFavorites));
+        
+        // 顯示移除提示
+        showToast('課程已從收藏中移除');
+        return true;
+      }
+      return false;
+    }
+    
+    // 顯示提示訊息
+    function showToast(message) {
+      const toast = document.createElement('ion-toast');
+      toast.message = message;
+      toast.duration = 2000;
+      toast.position = 'bottom';
+      document.body.appendChild(toast);
+      toast.present();
+    }
+    
+    // 切換收藏狀態
+    function toggleFavorite(event, course) {
+      event.stopPropagation(); // 防止觸發其他點擊事件
+      
+      const button = event.currentTarget;
+      const isFav = button.classList.contains('active');
+      
+      if (isFav) {
+        if (removeFromFavorites(course.id)) {
+          button.classList.remove('active');
+          button.querySelector('ion-icon').setAttribute('name', 'heart-outline');
+        }
+      } else {
+        if (addToFavorites(course)) {
+          button.classList.add('active');
+          button.querySelector('ion-icon').setAttribute('name', 'heart');
+        }
+      }
+    }
+    
     // 更新課程列表顯示
     function updateList() {
       courseList.innerHTML = ''; // 清空現有列表
@@ -483,15 +610,16 @@
       
       // 篩選課程
       let filteredCourses = courseItems.filter(item => {
+      
         // 搜尋條件
         const matchesSearch = searchTerm === '' || 
-                             item.title.toLowerCase().includes(searchTerm) || 
-                             item.description.toLowerCase().includes(searchTerm);
+         item.title.toLowerCase().includes(searchTerm) || 
+         item.description.toLowerCase().includes(searchTerm);
         
         // 程度篩選
         const matchesLevel = selectedLevel === '' || item.level.includes(selectedLevel);
         
-        // 領域篩選
+        // 課程篩選
         const matchesDomain = selectedDomain === '' || item.domain === selectedDomain;
         
         // 標籤篩選
@@ -500,10 +628,11 @@
         return matchesSearch && matchesLevel && matchesDomain && matchesTag;
       });
       
-      // 渲染篩選後的課程
+      // 篩選後的課程
       if (filteredCourses.length > 0) {
         filteredCourses.forEach(item => {
           const listItem = document.createElement('ion-item');
+          const isFav = isFavorite(item.id);
           
           listItem.innerHTML = `
             <ion-card style="width: 100%;">
@@ -511,6 +640,9 @@
                 <img src="${item.imageUrl}" alt="${item.title}" class="course-image">
                 <div class="play-button" onclick="openVideoModal('${item.videoUrl}', '${item.title}')">
                   <ion-icon name="play" color="light" size="large"></ion-icon>
+                </div>
+                <div class="favorite-button ${isFav ? 'active' : ''}" id="fav-btn-${item.id}">
+                  <ion-icon name="${isFav ? 'heart' : 'heart-outline'}"></ion-icon>
                 </div>
               </div>
               <ion-card-content>
@@ -538,7 +670,7 @@
           
           courseList.appendChild(listItem);
         });
-      } else {
+      } else {       
         // 沒有匹配的課程，顯示空狀態
         const emptyState = document.createElement('div');
         emptyState.className = 'empty-state';
@@ -547,7 +679,7 @@
           <h2>沒有找到符合條件的課程</h2>
           <p>請嘗試調整搜尋條件或分類篩選</p>
           <ion-button color="primary" onclick="resetAllFilters()">
-            <ion-icon name="refresh" slot="start"></ion-icon>
+            <ion-icon name="refresh" slot="end"></ion-icon>
             重設所有篩選
           </ion-button>
         `;
@@ -634,28 +766,28 @@
       videoContainer.innerHTML = '';
     });
     
-    // 監聽搜尋輸入事件
+    // Listen - 搜尋輸入
     searchBar.addEventListener('ionInput', (event) => {
       currentFilters.searchTerm = event.target.value || '';
       updateList();
     });
     
-    // 監聽程度選擇事件
+    // Listen - 程度選擇
     levelSelect.addEventListener('ionChange', (event) => {
       currentFilters.level = event.detail.value || '';
       updateList();
     });
     
-    // 監聽領域選擇事件
+    // Listen - 課程選擇
     domainSelect.addEventListener('ionChange', (event) => {
       currentFilters.domain = event.detail.value || '';
       updateList();
     });
     
-    // 監聽重設篩選按鈕
+    // Listen - refresh button
     resetFiltersBtn.addEventListener('click', resetAllFilters);
     
-    // 監聽標籤篩選器點擊
+    // Listen - filter button
     allFilter.addEventListener('click', () => {
       currentFilters.tag = '';
       updateList();

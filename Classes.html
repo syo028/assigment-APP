@@ -158,6 +158,47 @@
       color: var(--ion-color-medium);
       margin-bottom: 16px;
     }
+
+    .favorite-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .favorite-button:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: scale(1.1);
+    }
+    
+    .favorite-button ion-icon {
+      font-size: 22px;
+      color: #f44336;
+    }
+    
+    .favorite-button.active ion-icon {
+      color: #f44336;
+    }
+    
+    .favorite-button:not(.active) ion-icon {
+      color: #999;
+    }
+    
+    .course-actions {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background-color: #f5f5f5;
+    }
   </style>
 </head>
 
@@ -485,6 +526,78 @@
       tag: ''
     };
     
+        // 從 localStorage 獲取收藏課程
+        function getFavoriteCourses() {
+      return JSON.parse(localStorage.getItem('favoriteCourses')) || [];
+    }
+    
+    // 檢查課程是否已收藏
+    function isFavorite(courseId) {
+      const favorites = getFavoriteCourses();
+      return favorites.some(course => course.id === courseId);
+    }
+    
+    // 添加課程到收藏
+    function addToFavorites(course) {
+      let favorites = getFavoriteCourses();
+      
+      // 檢查是否已經收藏
+      if (!favorites.some(item => item.id === course.id)) {
+        favorites.push(course);
+        localStorage.setItem('favoriteCourses', JSON.stringify(favorites));
+        
+        // 顯示成功提示
+        showToast('課程已加入收藏');
+        return true;
+      }
+      return false;
+    }
+    
+    // 從收藏中移除課程
+    function removeFromFavorites(courseId) {
+      let favorites = getFavoriteCourses();
+      const newFavorites = favorites.filter(course => course.id !== courseId);
+      
+      if (newFavorites.length !== favorites.length) {
+        localStorage.setItem('favoriteCourses', JSON.stringify(newFavorites));
+        
+        // 顯示移除提示
+        showToast('課程已從收藏中移除');
+        return true;
+      }
+      return false;
+    }
+    
+    // 顯示提示訊息
+    function showToast(message) {
+      const toast = document.createElement('ion-toast');
+      toast.message = message;
+      toast.duration = 2000;
+      toast.position = 'bottom';
+      document.body.appendChild(toast);
+      toast.present();
+    }
+    
+    // 切換收藏狀態
+    function toggleFavorite(event, course) {
+      event.stopPropagation(); // 防止觸發其他點擊事件
+      
+      const button = event.currentTarget;
+      const isFav = button.classList.contains('active');
+      
+      if (isFav) {
+        if (removeFromFavorites(course.id)) {
+          button.classList.remove('active');
+          button.querySelector('ion-icon').setAttribute('name', 'heart-outline');
+        }
+      } else {
+        if (addToFavorites(course)) {
+          button.classList.add('active');
+          button.querySelector('ion-icon').setAttribute('name', 'heart');
+        }
+      }
+    }
+    
     // 更新課程列表顯示
     function updateList() {
       courseList.innerHTML = ''; // 清空現有列表
@@ -519,7 +632,8 @@
       if (filteredCourses.length > 0) {
         filteredCourses.forEach(item => {
           const listItem = document.createElement('ion-item');
-          
+          const isFav = isFavorite(item.id);
+
           listItem.innerHTML = `
             <ion-card style="width: 100%;">
               <div class="video-thumbnail">
@@ -527,6 +641,9 @@
                 <div class="play-button" onclick="openVideoModal('${item.videoUrl}', '${item.title}')">
                   <ion-icon name="play" color="light" size="large"></ion-icon>
                 </div>
+                <div class="favorite-button ${isFav ? 'active' : ''}" id="fav-btn-${item.id}">
+                  <ion-icon name="${isFav ? 'heart' : 'heart-outline'}"></ion-icon>
+                </div>                
               </div>
               <ion-card-content>
                 <div class="course-details">
