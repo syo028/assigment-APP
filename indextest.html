@@ -61,7 +61,7 @@
       padding: 16px;
       margin-bottom: 12px;
       background-color: var(--button-bg-color);
-      color: #070606;
+      color: white;
       border: none;
       border-radius: 8px;
       font-size: 16px;
@@ -73,6 +73,12 @@
     
     .menu-button:hover {
       background-color: var(--button-hover-bg-color);
+    }
+    
+    .menu-button ion-icon {
+      margin-right: 8px;
+      font-size: 20px;
+      vertical-align: middle;
     }
     
     /* Custom header styles to match the image */
@@ -103,8 +109,8 @@
       text-decoration: none;
     }
     
-    /* Registration Modal Styles */
-    .registration-form {
+    /* Chat Modal Styles */
+    .chat-form {
       padding: 20px;
     }
     
@@ -114,108 +120,196 @@
       margin-bottom: 20px;
       text-align: center;
     }
+    
+    .chat-container {
+      height: 300px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 15px;
+      overflow-y: auto;
+      background-color: #f9f9f9;
+    }
+    
+    .message {
+      margin-bottom: 10px;
+      padding: 8px 12px;
+      border-radius: 18px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+    
+    .user-message {
+      background-color: var(--button-bg-color);
+      color: white;
+      margin-left: auto;
+      border-bottom-right-radius: 4px;
+    }
+    
+    .admin-message {
+      background-color: #e5e5ea;
+      color: #000;
+      margin-right: auto;
+      border-bottom-left-radius: 4px;
+    }
+    
+    .message-time {
+      font-size: 12px;
+      color: #888;
+      text-align: right;
+      margin-top: 2px;
+    }
+    
+    .message-input {
+      display: bottom;
+      margin-top: 10px;
+    }
+    
+    .message-input ion-input {
+      flex-grow: 1;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      padding-left: 15px;
+      margin-right: 10px;
+    }
   </style>
 </head>
 
 <body>
   <ion-app>
     <!-- Custom header to match the image -->
-    <ion-header>
-      <ion-toolbar color="primary">
-        <ion-title>Python 課程教學</ion-title>
-      </ion-toolbar>
-  </ion-header>
+    <div class="custom-header">
+      <h1 class="header-title">Python 課程教學</h1>
+      <a href="index.html" class="back-button">
+        <ion-icon name="arrow-back"></ion-icon>
+      </a>
+    </div>
     
     <ion-content>
       <div class="menu-container">
         <div class="logo-container">
-          <img src="public/src/logo.png" alt="Python 學習平台 Logo" class="logo">
-      </div>
+          <img src="https://placehold.co/400x400/568203/FFFFFF?text=Python" alt="Python 學習平台 Logo" class="logo">
+        </div>
         
         <p class="menu-instruction">Tap a button below to open a specific menu.</p>
         
-        <button class="menu-button" id="open-registration">Registration</button>
-        <button class="menu-button" onclick="openAllClasses()">All Classes</button>
-        <button class="menu-button" onclick="openMyPage()">My Page</button>
+        <button class="menu-button" onclick="openAllClasses()">
+          <ion-icon name="book-outline"></ion-icon>
+          All Classes
+        </button>
+        
+        <button class="menu-button" onclick="openMyPage()">
+          <ion-icon name="person-outline"></ion-icon>
+          My Page
+        </button>
+        
+        <button class="menu-button" onclick="openFavorites()">
+          <ion-icon name="bookmark-outline"></ion-icon>
+          收藏功能
+        </button>
+        
+        <button class="menu-button" id="open-create-pm">
+          <ion-icon name="mail-outline"></ion-icon>
+          Create PM
+        </button>
+        
+        <button class="menu-button" id="open-admin-chat">
+          <ion-icon name="chatbubbles-outline"></ion-icon>
+          Chat with 平台管理員
+        </button>
       </div>
     </ion-content>
     
-    <!-- Registration Modal -->
-    <ion-modal trigger="open-registration">
+    <!-- Create PM Modal -->
+    <ion-modal trigger="open-create-pm">
       <ion-header>
         <ion-toolbar color="primary">
-          <ion-title>Registration</ion-title>
+          <ion-title>Create Private Message</ion-title>
           <ion-buttons slot="end">
-            <ion-button onclick="dismissRegistrationModal()">Close</ion-button>
+            <ion-button onclick="dismissModal('pm-modal')">Close</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <div class="registration-form">
-          <div class="form-title">Create Your Account</div>
+        <div class="chat-form">
+          <div class="form-title">New Private Message</div>
           
           <ion-item>
-            <ion-label position="floating">Full Name</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-label position="floating">Recipient</ion-label>
+            <ion-input type="text" placeholder="Enter username or select from contacts"></ion-input>
           </ion-item>
           
           <ion-item>
-            <ion-label position="floating">Email</ion-label>
-            <ion-input type="email" required></ion-input>
+            <ion-label position="floating">Subject</ion-label>
+            <ion-input type="text" placeholder="Enter message subject"></ion-input>
           </ion-item>
           
           <ion-item>
-            <ion-label position="floating">Password</ion-label>
-            <ion-input type="password" required></ion-input>
-          </ion-item>
-          
-          <ion-item>
-            <ion-label position="floating">Confirm Password</ion-label>
-            <ion-input type="password" required></ion-input>
+            <ion-label position="floating">Message</ion-label>
+            <ion-textarea rows="6" placeholder="Type your message here..."></ion-textarea>
           </ion-item>
           
           <ion-button expand="block" color="primary" style="margin-top: 20px;">
-            Register
+            <ion-icon name="send" slot="start"></ion-icon>
+            Send Message
           </ion-button>
-          
-          <p style="text-align: center; margin-top: 20px; color: #777;">
-            Already have an account? <a href="#" style="color: var(--ion-color-primary);">Sign In</a>
-          </p>
         </div>
       </ion-content>
     </ion-modal>
     
-    <!-- Login Check Alert -->
-    <ion-alert id="login-alert" 
-      header="Login Required" 
-      message="You need to be logged in to access My Page."
-      buttons={[
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        },
-        {
-          text: 'Login',
-          handler: () => {
-            console.log('Login clicked');
-            // Here you would redirect to login page
-          }
-        }
-      ]}>
-    </ion-alert>
+    <!-- Admin Chat Modal -->
+    <ion-modal trigger="open-admin-chat">
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Chat with 平台管理員</ion-title>
+          <ion-buttons slot="end">
+            <ion-button onclick="dismissModal('admin-chat-modal')">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="chat-form">
+          <div class="chat-container" id="chat-messages">
+            <div class="message admin-message">
+              您好！我是平台管理員，有什麼可以幫助您的嗎？
+              <div class="message-time">10:30 AM</div>
+            </div>
+            
+            <div class="message user-message">
+              您好，我想了解更多關於 Python 進階課程的信息。
+              <div class="message-time">10:32 AM</div>
+            </div>
+            
+            <div class="message admin-message">
+              當然可以！我們有多個 Python 進階課程，包括數據分析、機器學習和 Web 開發方向。您對哪個方向更感興趣呢？
+              <div class="message-time">10:33 AM</div>
+            </div>
+          </div>
+          
+          <div class="message-input">
+            <ion-input placeholder="Type a message..." id="message-input"></ion-input>
+            <ion-button color="primary" onclick="sendMessage()">
+              <ion-icon name="send"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </ion-content>
+    </ion-modal>
   </ion-app>
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Get the login alert element
-      const loginAlert = document.querySelector('#login-alert');
+      // Set up event listeners for the modals
+      const pmModal = document.querySelector('ion-modal[trigger="open-create-pm"]');
+      const adminChatModal = document.querySelector('ion-modal[trigger="open-admin-chat"]');
       
-      // Set up event listeners for the modal
-      const registrationModal = document.querySelector('ion-modal');
-      
-      // Function to dismiss the registration modal
-      window.dismissRegistrationModal = function() {
-        registrationModal.dismiss();
+      // Function to dismiss modals
+      window.dismissModal = function(modalType) {
+        if (modalType === 'pm-modal') {
+          pmModal.dismiss();
+        } else if (modalType === 'admin-chat-modal') {
+          adminChatModal.dismiss();
+        }
       };
     });
     
@@ -224,26 +318,61 @@
       window.location.href = 'classes.html';
     }
     
-    // Function to check if user is logged in and open My Page
+    // Function to open My Page (no login required now)
     function openMyPage() {
-      // Check if user is logged in (this is a simple example, you would use a more robust method)
-      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-      
-      if (isLoggedIn) {
-        // If logged in, navigate to my page
-        window.location.href = 'my-page.html';
-      } else {
-        // If not logged in, show alert
-        const loginAlert = document.querySelector('#login-alert');
-        loginAlert.present();
-      }
+      window.location.href = 'my-page.html';
     }
     
-    // For demo purposes - function to toggle login state
-    function toggleLoginState() {
-      const currentState = localStorage.getItem('isLoggedIn') === 'true';
-      localStorage.setItem('isLoggedIn', !currentState);
-      alert(`Login state changed to: ${!currentState ? 'Logged In' : 'Logged Out'}`);
+    // Function to open Favorites page
+    function openFavorites() {
+      window.location.href = 'favorites.html';
+    }
+    
+    // Function to send a message in the admin chat
+    function sendMessage() {
+      const messageInput = document.getElementById('message-input');
+      const chatMessages = document.getElementById('chat-messages');
+      
+      if (messageInput.value.trim() !== '') {
+        // Get current time
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        const formattedHours = hours % 12 || 12;
+        const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+        const timeString = `${formattedHours}:${formattedMinutes} ${ampm}`;
+        
+        // Create message element
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message user-message';
+        messageDiv.innerHTML = `
+          ${messageInput.value}
+          <div class="message-time">${timeString}</div>
+        `;
+        
+        // Add to chat container
+        chatMessages.appendChild(messageDiv);
+        
+        // Clear input
+        messageInput.value = '';
+        
+        // Scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        
+        // Simulate admin response after a delay
+        setTimeout(() => {
+          const adminResponse = document.createElement('div');
+          adminResponse.className = 'message admin-message';
+          adminResponse.innerHTML = `
+            感謝您的訊息！我們的團隊將盡快回覆您的問題。
+            <div class="message-time">${formattedHours}:${formattedMinutes + 1} ${ampm}</div>
+          `;
+          
+          chatMessages.appendChild(adminResponse);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 1000);
+      }
     }
   </script>
 </body>
