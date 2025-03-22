@@ -499,8 +499,8 @@
       }
     ];
 
-    // 獲取 DOM 元素
-    const videoModal = document.querySelector('#video-modal');
+     // 獲取 DOM 元素
+     const videoModal = document.querySelector('#video-modal');
     const videoTitle = document.querySelector('#video-title');
     const videoContainer = document.querySelector('#video-container');
     const closeModalBtn = document.querySelector('#close-modal');
@@ -526,8 +526,8 @@
       tag: ''
     };
     
-        // 從 localStorage 獲取收藏課程
-        function getFavoriteCourses() {
+    // 從 localStorage 獲取收藏課程
+    function getFavoriteCourses() {
       return JSON.parse(localStorage.getItem('favoriteCourses')) || [];
     }
     
@@ -633,7 +633,7 @@
         filteredCourses.forEach(item => {
           const listItem = document.createElement('ion-item');
           const isFav = isFavorite(item.id);
-
+          
           listItem.innerHTML = `
             <ion-card style="width: 100%;">
               <div class="video-thumbnail">
@@ -643,7 +643,7 @@
                 </div>
                 <div class="favorite-button ${isFav ? 'active' : ''}" id="fav-btn-${item.id}">
                   <ion-icon name="${isFav ? 'heart' : 'heart-outline'}"></ion-icon>
-                </div>                
+                </div>
               </div>
               <ion-card-content>
                 <div class="course-details">
@@ -669,6 +669,10 @@
           `;
           
           courseList.appendChild(listItem);
+          
+          // 添加收藏按鈕事件監聽
+          const favBtn = document.getElementById(`fav-btn-${item.id}`);
+          favBtn.addEventListener('click', (event) => toggleFavorite(event, item));
         });
       } else {
         // 沒有匹配的課程，顯示空狀態
@@ -724,7 +728,7 @@
     // 按標籤篩選
     function filterByTag(tag) {
       if (currentFilters.tag === tag) {
-   // 如果點擊的是當前已選標籤，則取消篩選
+        // 如果點擊的是當前已選標籤，則取消篩選
         currentFilters.tag = '';
       } else {
         currentFilters.tag = tag;
@@ -762,7 +766,7 @@
     // 關閉 Modal 時清空影片
     closeModalBtn.addEventListener('click', () => {
       videoModal.dismiss();
-    // 清空影片容器，避免影片繼續播放
+      // 清空影片容器，避免影片繼續播放
       videoContainer.innerHTML = '';
     });
     
@@ -809,5 +813,6 @@
       updateList();
     });
   </script>
+
 </body>
 </html>

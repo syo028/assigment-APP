@@ -669,8 +669,12 @@
           `;
           
           courseList.appendChild(listItem);
+          
+          // 添加收藏按鈕事件監聽
+          const favBtn = document.getElementById(`fav-btn-${item.id}`);
+          favBtn.addEventListener('click', (event) => toggleFavorite(event, item));
         });
-      } else {       
+      } else {
         // 沒有匹配的課程，顯示空狀態
         const emptyState = document.createElement('div');
         emptyState.className = 'empty-state';
