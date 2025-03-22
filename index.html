@@ -192,7 +192,7 @@ body {
         </button>
 
         <!--Third List-->
-        <button class="menu-button" id="open-admin-chat">
+        <button class="menu-button" onclick="openchatroom()">
           <ion-icon name="chatbubbles-outline"></ion-icon>
           與管理員聯絡
         </button>
@@ -253,52 +253,11 @@ body {
       window.location.href = 'favorites.html';
     }
    
-    // Send message to admin
-      function sendMessage() {
-      const messageInput = document.getElementById('message-input');
-      const chatMessages = document.getElementById('chat-messages');
-      
-      if (messageInput.value.trim() !== '') {
-        // Get current time
-        const now = new Date();
-        const hours = now.getHours();
-        const minutes = now.getMinutes();
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        const formattedHours = hours % 12 || 12;
-        const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-        const timeString = `${formattedHours}:${formattedMinutes} ${ampm}`;
-        
-        // Create message element
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'message user-message';
-        messageDiv.innerHTML = `
-          ${messageInput.value}
-          <div class="message-time">${timeString}</div>
-        `;
-        
-        // Add to chat container
-        chatMessages.appendChild(messageDiv);
-        
-        // Clear input
-        messageInput.value = '';
-        
-        // Scroll to bottom
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        
-        // Simulate admin response after a delay
-        setTimeout(() => {
-          const adminResponse = document.createElement('div');
-          adminResponse.className = 'message admin-message';
-          adminResponse.innerHTML = `
-            感謝您的訊息！我們的團隊將盡快回覆您的問題。
-            <div class="message-time">${formattedHours}:${formattedMinutes + 1} ${ampm}</div>
-          `;
-          
-          chatMessages.appendChild(adminResponse);
-          chatMessages.scrollTop = chatMessages.scrollHeight;
-        }, 1000);
-      }
+    // Open Chatroom page
+    function openchatroom() {
+      window.location.href = 'chat.html';
     }
+    
   </script>
 
 
