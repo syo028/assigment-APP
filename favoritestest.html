@@ -153,6 +153,10 @@
       .modal-video {
         height: 450px;
       }
+      
+      .filter-container {
+        flex-wrap: nowrap;
+      }
     }
     
     .header-note {
@@ -162,6 +166,32 @@
       margin-bottom: 10px;
       font-size: 14px;
       color: var(--ion-color-medium);
+    }
+    
+    .filter-container {
+      display: flex;
+      padding: 0 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    
+    .filter-label {
+      margin-right: 10px;
+      white-space: nowrap;
+    }
+    
+    .filter-group {
+      font-size: small;
+      display: flex;
+      align-items: center;
+      flex-wrap: auto
+      min-width: 200px;
+    }
+    
+    .reset-button {
+      display: right;
+      margin-left: 3px;
     }
   </style>
 </head>
@@ -176,12 +206,41 @@
         </a>
       </ion-toolbar>
 
-      <div class="search-container">
-        <ion-searchbar
-          id="search-bar"
-          placeholder="搜尋收藏課程..."
-        ></ion-searchbar>
-      </div>
+      <!--搜尋功能-->
+      <ion-searchbar
+        id="search-bar"
+        placeholder="搜尋收藏課程..."
+      ></ion-searchbar>
+      
+      <!--分類程度功能-->
+      <ion-toolbar>
+        <div class="filter-container">
+          <div class="filter-group">
+            <div class="filter-label">程度:</div>
+            <ion-select placeholder="選擇程度" id="level-select" interface="popover">
+              <ion-select-option value="">全部</ion-select-option>
+              <ion-select-option value="入門">入門</ion-select-option>
+              <ion-select-option value="中級">中級</ion-select-option>
+              <ion-select-option value="進階">進階</ion-select-option>
+            </ion-select>
+          </div>
+      <!--分類課程功能-->    
+          <div class="filter-group">
+            <div class="filter-label">課程:</div>
+            <ion-select placeholder="選擇課程" id="domain-select" interface="popover">
+              <ion-select-option value="">全部</ion-select-option>
+              <ion-select-option value="基礎">基礎程式設計</ion-select-option>
+              <ion-select-option value="數據">數據分析與處理</ion-select-option>
+              <ion-select-option value="網頁">網頁與API開發</ion-select-option>
+              <ion-select-option value="人工智能">人工智能與機器學習</ion-select-option>
+            </ion-select>
+          </div>
+      <!--refresh功能-->    
+      <ion-button size="small" id="reset-filters" fill="outline" class="reset-button">
+            <ion-icon name="refresh" size="small" slot="start"></ion-icon>
+            </ion-button>
+        </div>
+      </ion-toolbar>
     </ion-header>
     
     <ion-content>
@@ -219,10 +278,17 @@
     const videoContainer = document.querySelector('#video-container');
     const closeModalBtn = document.querySelector('#close-modal');
     const searchBar = document.querySelector('#search-bar');
+    const levelSelect = document.querySelector('#level-select');
+    const domainSelect = document.querySelector('#domain-select');
+    const resetFiltersBtn = document.querySelector('#reset-filters');
     const favoritesList = document.querySelector('#favorites-list');
     
-    // 當前搜尋條件
-    let searchTerm = '';
+    // 當前篩選條件
+    let currentFilters = {
+      searchTerm: '',
+      level: '',
+      domain: ''
+    };
     
     // 從 localStorage 獲取收藏課程
     function getFavoriteCourses() {
@@ -271,13 +337,21 @@
       // 獲取所有收藏課程
       let favorites = getFavoriteCourses();
       
-      // 如果有搜尋條件，進行篩選
-      if (searchTerm !== '') {
-        favorites = favorites.filter(item => 
-          item.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-          item.description.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      }
+      // 篩選課程
+      favorites = favorites.filter(item => {
+        // 搜尋條件
+        const matchesSearch = currentFilters.searchTerm === '' || 
+          item.title.toLowerCase().includes(currentFilters.searchTerm.toLowerCase()) || 
+          item.description.toLowerCase().includes(currentFilters.searchTerm.toLowerCase());
+        
+        // 程度篩選
+        const matchesLevel = currentFilters.level === '' || item.level.includes(currentFilters.level);
+        
+        // 課程篩選
+        const matchesDomain = currentFilters.domain === '' || item.domain === currentFilters.domain;
+        
+        return matchesSearch && matchesLevel && matchesDomain;
+      });
       
       // 顯示收藏課程
       if (favorites.length > 0) {
@@ -325,17 +399,49 @@
         // 沒有收藏課程，顯示空狀態
         const emptyState = document.createElement('div');
         emptyState.className = 'empty-state';
-        emptyState.innerHTML = `
-          <ion-icon name="heart-outline"></ion-icon>
-          <h2>您還沒有收藏任何課程</h2>
-          <p>在課程頁面點擊心形圖標來收藏您喜歡的課程</p>
-          <ion-button color="primary" href="classes.html">
-            <ion-icon name="list" slot="start"></ion-icon>
-            瀏覽所有課程
-          </ion-button>
-        `;
+        
+        if (currentFilters.searchTerm !== '' || currentFilters.level !== '' || currentFilters.domain !== '') {
+          // 有篩選條件但沒有匹配的課程
+          emptyState.innerHTML = `
+            <ion-icon name="search-outline"></ion-icon>
+            <h2>沒有找到符合條件的收藏課程</h2>
+            <p>請嘗試調整搜尋條件或分類篩選</p>
+            <ion-button color="primary" onclick="resetAllFilters()">
+              <ion-icon name="refresh" slot="end"></ion-icon>
+              重設所有篩選
+            </ion-button>
+          `;
+        } else {
+          // 沒有任何收藏課程
+          emptyState.innerHTML = `
+            <ion-icon name="heart-outline"></ion-icon>
+            <h2>您還沒有收藏任何課程</h2>
+            <p>在課程頁面點擊心形圖標來收藏您喜歡的課程</p>
+            <ion-button color="primary" href="classes.html">
+              <ion-icon name="list" slot="start"></ion-icon>
+              瀏覽所有課程
+            </ion-button>
+          `;
+        }
+        
         favoritesList.appendChild(emptyState);
       }
+    }
+    
+    // 重設所有篩選
+    function resetAllFilters() {
+      currentFilters = {
+        searchTerm: '',
+        level: '',
+        domain: ''
+      };
+      
+      // 重設 UI 元素
+      searchBar.value = '';
+      levelSelect.value = '';
+      domainSelect.value = '';
+      
+      updateFavoritesList();
     }
     
     // 打開影片 Modal
@@ -357,13 +463,29 @@
     
     // 搜尋功能
     searchBar.addEventListener('ionInput', (event) => {
-      searchTerm = event.target.value || '';
+      currentFilters.searchTerm = event.target.value || '';
       updateFavoritesList();
     });
+    
+    // 程度選擇
+    levelSelect.addEventListener('ionChange', (event) => {
+      currentFilters.level = event.detail.value || '';
+      updateFavoritesList();
+    });
+    
+    // 課程選擇
+    domainSelect.addEventListener('ionChange', (event) => {
+      currentFilters.domain = event.detail.value || '';
+      updateFavoritesList();
+    });
+    
+    // 重設按鈕
+    resetFiltersBtn.addEventListener('click', resetAllFilters);
     
     // 將函數暴露到全局作用域
     window.openVideoModal = openVideoModal;
     window.removeFavorite = removeFavorite;
+    window.resetAllFilters = resetAllFilters;
     
     // 初始化，顯示所有收藏課程
     document.addEventListener('DOMContentLoaded', () => {
