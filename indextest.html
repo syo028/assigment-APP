@@ -177,13 +177,16 @@
 
 <body>
   <ion-app>
+    <ion-nav root=""></ion-nav>
+    </ion-app>
+    <template id="">
+      <ion-header>
+        <ion-toolbar>
+        <ion-title>Python 課程教學 </ion-title>
+       </ion-toolbar>
+      </ion-header>
     <!-- Custom header to match the image -->
-    <div class="custom-header">
-      <h1 class="header-title">Python 課程教學</h1>
-      <a href="index.html" class="back-button">
-        <ion-icon name="arrow-back"></ion-icon>
-      </a>
-    </div>
+
     
     <ion-content>
       <div class="menu-container">
@@ -219,7 +222,8 @@
         </button>
       </div>
     </ion-content>
-    
+  </template>
+
     <!-- Create PM Modal -->
     <ion-modal trigger="open-create-pm">
       <ion-header>

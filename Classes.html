@@ -21,23 +21,26 @@
   <link rel="stylesheet" href="common.css" />
  
   <style>
+body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
 
     .icon-link {
             position: absolute; 
-            top: 10px; 
-            right: 10px;
+            top: 0.625rem; 
+            right: 0.625rem;
             display: flex; 
             align-items: center; 
             text-decoration: none; 
             color: #0163aa; 
-            font-size: 24px; 
+            font-size: 1.5rem; 
         }
 
     .course-image {
       width: 100%;
-      height: 180px;
+      height: 11.25rem;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 0.5rem;
     }
     
     .video-thumbnail {
@@ -52,52 +55,52 @@
       transform: translate(-50%, -50%);
       background: rgba(0, 0, 0, 0.6);
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
+      width: 3.125rem;
+      height: 3.125rem;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     
     .course-details {
-      margin-top: 10px;
+      margin-top: 0.625rem;
     }
     
     .course-title {
-      font-size: 18px;
+      font-size: 10.5rem;
       font-weight: bold;
-      margin-bottom: 5px;
+      margin-bottom: 0.3125rem;
     }
     
     .course-meta {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 8px;
+      margin-bottom: 0.5rem;
       color: var(--ion-color-medium);
-      font-size: 14px;
+      font-size: 0.875rem;
     }
     
     .course-description {
-      margin-bottom: 10px;
+      margin-bottom: 0.625rem;
       color: var(--ion-color-dark);
-      font-size: 15px;
+      font-size: 0.9375rem;
     }
     
     .tag-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 5px;
-      margin-top: 8px;
+      gap: 0.3125rem;
+      margin-top: 0.5rem;
     }
     
     ion-chip {
-      font-size: 12px;
+      font-size: 0.75rem;
       cursor: pointer;
     }
     
     .modal-video {
       width: 100%;
-      height: 300px;
+      height: 18.75rem;
     }
     
     .filter-container {
@@ -105,11 +108,11 @@
       padding: 0 16px;
       align-items: center;
       flex-wrap: wrap;
-      gap: 5px;
+      gap: 0.3125rem;
     }
     
     .filter-label {
-      margin-right: 10px;
+      margin-right: 0.625rem;
       white-space: nowrap;
     }
     
@@ -118,11 +121,11 @@
       display: flex;
       align-items: center;
       flex-wrap: auto
-      min-width: 200px;
+      min-width: 12.5rem;
     }
     
     .reset-button {
-      margin-left: 3px;
+      margin-left: 0.1875rem;
     }
     
     .active-filter {
@@ -132,14 +135,14 @@
     
     .filter-chips {
       display: flex;
-      padding: 0 16px 10px;
+      padding: 0 1rem 0.625rem;
       flex-wrap: auto
-      gap: 8px;
+      gap: 0.5rem;
     }
     
-    @media (min-width: 768px) {
+    @media (min-width: 760.5rem) {
       .modal-video {
-        height: 450px;
+        height: 43.125rem;
       }
       
       .filter-container {
@@ -150,24 +153,24 @@
     .empty-state {
       width: 100%;
       text-align: center;
-      padding: 40px 20px;
+      padding: 2.5rem 1.25px;
     }
     
     .empty-state ion-icon {
-      font-size: 64px;
+      font-size: 4rem;
       color: var(--ion-color-medium);
-      margin-bottom: 16px;
+      margin-bottom: 1rem;
     }
 
     .favorite-button {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 0.625rem;
+      right: 0.625rem;
       z-index: 10;
       background: rgba(255, 255, 255, 0.7);
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
+      width: 2.25rem;
+      height: 2.25rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -181,7 +184,7 @@
     }
     
     .favorite-button ion-icon {
-      font-size: 22px;
+      font-size: 1.375rem;
       color: #f44336;
     }
     
@@ -196,7 +199,7 @@
     .course-actions {
       display: flex;
       justify-content: space-between;
-      padding: 8px 12px;
+      padding: 0.5rem 0.75rem;
       background-color: #f5f5f5;
     }
   </style>

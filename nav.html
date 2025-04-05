@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python 課程教學</title>
+  
+  <script type="module" 
+  src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js">
+</script>
+  <script nomodule 
+  src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js">
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+<link rel="stylesheet" href="theme.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+
+body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .menu-container {
+      padding: 1.25rem;
+      max-width: 31.25rem;
+      margin: 0 auto;
+    }
+    
+    .logo-container {
+      text-align: center;
+      margin: 1.875rem 0;
+    }
+
+    .logo {
+      width: 11.25rem;
+      height: 11.25rem;
+      border-radius: 50%;
+      border: 0.25rem solid var(--ion-color-primary);
+      padding: 0.625rem;
+    }
+    
+    .menu-instruction {
+      margin-bottom: 1.25rem;
+      color: #555;
+      text-align: center;
+    }
+    
+    .btn {
+      align-items: center;
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+      background-color: var(--ion-color-primary-tint);
+      color: "tertiary";
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      
+    }
+
+
+</style>
+</head>
+<body>
+
+        <ion-header>
+            <ion-toolbar color="primary">
+                <ion-title>Python 課程教學</ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+
+            <div class="menu-container">
+                <div class="logo-container">
+                    <img src="public/src/logo.png" alt="Python 學習平台 Logo" class="logo">
+                </div>
+                <p class="menu-instruction">歡迎來到教學平台，請選擇以下清單:</p>
+            
+                <app-button icon="magnifying-glass" text="所有課程" target="allCourses"></app-button>
+                <app-button icon="bookmark" text="我的收藏" target="myFavorites"></app-button>
+                <app-button icon="message" text="與管理員聯絡" target="contactAdmin"></app-button>
+            </div>
+          
+            <script>
+                class AppButton extends HTMLElement {
+                    connectedCallback() {
+                        const icon = this.getAttribute('icon');
+                        const text = this.getAttribute('text');
+                        const target = this.getAttribute('target'); // new attribute to specify target page
+            
+                        this.innerHTML = `
+                            <button class="btn" id="${target}">
+                                <i class="fa-solid fa-${icon}"></i>
+                                <span class="btn-text">${text}</span>
+                            </button>`;
+                            
+                        // Attach event listener for button click
+                        this.querySelector('button').addEventListener('click', () => {
+                            this.navigateTo(target);
+                        });
+                    }
+            
+                    navigateTo(target) {
+                        const nav = document.querySelector('ion-nav'); // Get the ion-nav component
+            
+                        // Navigate to the respective target
+                        if (target === 'allCourses') {
+                            nav.setRoot('classes.html'); // Assuming classes.html is the page for all courses
+                        } else if (target === 'myFavorites') {
+                            nav.setRoot('favorites.html'); // Assuming favorites.html is the page for favorites
+                        } else if (target === 'contactAdmin') {
+                            // Logic for contacting admin can be implemented here
+                            console.log('Contacting admin...');
+                            alert('Admin contact feature not implemented yet.');
+                        }
+                    }
+                }
+            
+                customElements.define('app-button', AppButton);
+            </script>
+    
+</body>
+</html>
