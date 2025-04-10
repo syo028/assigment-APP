@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="common.css" />
 
 
+
   </head>
 
   <body>
@@ -324,20 +325,105 @@
         }
       }
       
+      // Chat functions for page four
+      function getCurrentTime() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        const formattedHours = hours % 12 || 12;
+        const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+        return `${formattedHours}:${formattedMinutes} ${ampm}`;
+      }
+      
+      function addMessage(text, isUser = true) {
+        const messagesContainer = document.querySelector('#messages-container');
+        if (!messagesContainer) return;
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isUser ? 'user-message' : 'admin-message'}`;
+        messageDiv.innerHTML = `
+          ${text}
+          <div class="message-time">${getCurrentTime()}</div>
+        `;
+        
+        messagesContainer.appendChild(messageDiv);
+        
+        // Scroll to the bottom
+        const content = document.querySelector('ion-content');
+        content.scrollToBottom(300);
+      }
+      
+      function showTypingIndicator() {
+        const typingIndicator = document.querySelector('#typing-indicator');
+        if (typingIndicator) {
+          typingIndicator.classList.add('active');
+        }
+      }
+      
+      function hideTypingIndicator() {
+        const typingIndicator = document.querySelector('#typing-indicator');
+        if (typingIndicator) {
+          typingIndicator.classList.remove('active');
+        }
+      }
+      
+      function simulateAdminResponse(userMessage) {
+        showTypingIndicator();
+        
+        let response = '';
+        const lowerMessage = userMessage.toLowerCase();
+        
+        // Simulate thinking time
+        const thinkingTime = 1000 + Math.random() * 2000;
+        
+        setTimeout(() => {
+          hideTypingIndicator();
+          
+          if (lowerMessage.includes('你好') || lowerMessage.includes('HI') || lowerMessage.includes('hi') || lowerMessage.includes('hello')) {
+            response = '您好！請問有什麼可以幫到您嗎？';
+          } else if (lowerMessage.includes('課程') || lowerMessage.includes('class')) {
+            response = '我們只提供從網上得到的資源分享 Python 課程，您可以在「All Classes」頁面查看所有課程。';
+          } else {
+            response = '感謝您的訊息！我們的團隊將盡快處理您的問題。如果您有更多問題，請隨時告訴我。';
+          }
+          
+          addMessage(response, false);
+        }, thinkingTime);
+      }
+      
+      function sendChatMessage() {
+        const messageInput = document.querySelector('#message-input');
+        if (!messageInput) return;
+        
+        const message = messageInput.value.trim();
+        
+        if (message) {
+          // Add user message to chat
+          addMessage(message, true);
+          
+          // Clear input
+          messageInput.value = '';
+          
+          // Simulate admin response
+          simulateAdminResponse(message);
+        }
+      }
+      
       // Make functions available globally
       window.openVideoModal = openVideoModal;
       window.filterByTag = filterByTag;
       window.resetAllFilters = resetAllFilters;
       window.toggleFavorite = toggleFavorite;
+      window.sendChatMessage = sendChatMessage;
 
       class PageOne extends HTMLElement {
         connectedCallback() {
           this.innerHTML = `
-      <ion-header>
-        <ion-toolbar color="primary">
-          <ion-title>Python 課程教學</ion-title>
-        </ion-toolbar>
-      </ion-header>
+            <ion-header>
+              <ion-toolbar color="primary">
+                <ion-title style="color: white; font-weight: bold;">Python 課程教學</ion-title>
+              </ion-toolbar>
             </ion-header>
 
             <ion-content>
@@ -395,7 +481,7 @@
                 <ion-buttons slot="start">
                   <ion-back-button></ion-back-button>
                 </ion-buttons>
-                <ion-title>Python 課程教學</ion-title>
+                <ion-title style="color: white; font-weight: bold;">Python 課程教學</ion-title>
               </ion-toolbar>
               
              <!--搜尋功能-->
@@ -703,57 +789,69 @@
           this.innerHTML = `
             <ion-header>
               <ion-toolbar color="primary">
-                <ion-buttons slot="end">
+                <ion-buttons slot="start">
                   <ion-back-button></ion-back-button>
                 </ion-buttons>
-                <ion-title>我的收藏</ion-title>
+                <ion-title style="color: white; font-weight: bold;">我的收藏</ion-title>
               </ion-toolbar>
 
-                    <!--搜尋功能-->
-      <ion-searchbar
-        id="search-bar"
-        placeholder="搜尋收藏課程..."
-      ></ion-searchbar>
-
+              <!--搜尋功能-->
+              <ion-searchbar
+                id="search-bar"
+                placeholder="搜尋收藏課程..."
+              ></ion-searchbar>
             </ion-header>
-    <ion-content>
-      <div class="header-note">
-        <ion-icon name="heart"></ion-icon> 這裡顯示您收藏的所有課程
-      </div>
-      
-      <ion-list id="favorites-list">
-        <!-- 收藏課程將由 JavaScript 動態生成 -->
-      </ion-list>
-    </ion-content>
-    
-    <!-- 影片播放 Modal -->
-    <ion-modal id="video-modal">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title id="video-title">影片播放</ion-title>
-          <ion-buttons slot="end">
-            <ion-button id="close-modal">關閉</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <div id="video-container" class="ion-padding">
-          <!-- 影片將在這裡顯示 -->
-        </div>
-      </ion-content>
-    </ion-modal>
+            
+            <ion-content>
+              <div class="header-note">
+                <ion-icon name="heart"></ion-icon> 這裡顯示您收藏的所有課程
+              </div>
+              
+              <ion-list id="favorites-list">
+                <!-- 收藏課程將由 JavaScript 動態生成 -->
+              </ion-list>
+            </ion-content>
+            
+            <!-- 影片播放 Modal -->
+            <ion-modal id="video-modal">
+              <ion-header>
+                <ion-toolbar>
+                  <ion-title id="video-title">影片播放</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button id="close-modal">關閉</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content>
+                <div id="video-container" class="ion-padding">
+                  <!-- 影片將在這裡顯示 -->
+                </div>
+              </ion-content>
+            </ion-modal>
           `;
           
-          // Initialize favorites page
+          
+        // Initialize favorites page
+        this.initModalClose();
           setTimeout(() => this.loadFavorites(), 0);
         }
+
+        initModalClose() {
+        const closeModalBtn = this.querySelector('#close-modal');
+        const videoModal = this.querySelector('#video-modal');
+
+        // Set event listener for the close modal button
+        closeModalBtn.addEventListener('click', () => {
+            videoModal.dismiss(); // Close the modal
+        });
+    }
         
         loadFavorites() {
-          const favoritesContainer = this.querySelector('#favorites-container');
+          const favoritesList = this.querySelector('#favorites-list');
           const favorites = getFavoriteCourses();
           
           if (favorites.length > 0) {
-            const favoritesList = document.createElement('ion-list');
+            favoritesList.innerHTML = '';
             
             favorites.forEach(item => {
               const listItem = document.createElement('ion-item');
@@ -796,12 +894,9 @@
                 });
               }, 0);
             });
-            
-            favoritesContainer.innerHTML = '';
-            favoritesContainer.appendChild(favoritesList);
           } else {
             // No favorites, show empty state
-            favoritesContainer.innerHTML = `
+            favoritesList.innerHTML = `
               <div class="empty-state">
                 <ion-icon name="heart-outline"></ion-icon>
                 <h2>您還沒有收藏任何課程</h2>
@@ -819,105 +914,148 @@
       }
       
       class PageFour extends HTMLElement {
-        connectedCallback() {
-          this.innerHTML = `
-            <ion-header>
-              <ion-toolbar color="primary">
-                <ion-buttons slot="end">
-                  <ion-back-button></ion-back-button>
-                </ion-buttons>
-                <ion-title>Chatroom</ion-title>
-              </ion-toolbar>
-            </ion-header>
-            
-   <ion-content>
-      <div class="chat-container">
-        <div class="admin-info">
-          <div class="admin-avatar">管</div>
-          <div>
-            <div><strong>管理員-P仔</strong></div>
-            <div class="admin-status">下線 • 通常在幾分鐘內回覆</div>
+  connectedCallback() {
+    this.innerHTML = `
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+          </ion-buttons>
+          <ion-title style="color: white; font-weight: bold;">聯絡管理員</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <div class="chat-container">
+          <div class="admin-info">
+            <div class="admin-avatar">管</div>
+            <div>
+              <div><strong>管理員-P仔</strong></div>
+              <div class="admin-status">下線 • 通常在幾分鐘內回覆</div>
+            </div>
           </div>
-        </div>
-
-                <div id="messages-container">
-          <div class="message admin-message">
-            您好！我是管理員-P仔，有什麼可以幫助您的嗎？
-            <div class="message-time">10:30 AM</div>
-          </div>
-        </div>
-
-                <div id="typing-indicator" class="typing-indicator">
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-        </div>
-      </div>
-                
-                <div class="message-input">
-                  <ion-input placeholder="輸入訊息..." id="message-input"></ion-input>
-                  <ion-button color="primary" id="send-message-btn">
-                    <ion-icon name="paper-plane"></ion-icon>
-                  </ion-button>
-                </div>
-              </div>
-            </ion-content>
-
-            
-          `;
           
-          // Initialize chat
-          setTimeout(() => {
-            const messageInput = this.querySelector('#message-input');
-            const sendButton = this.querySelector('#send-message-btn');
-            const chatMessages = this.querySelector('#chat-messages');
-            
-            sendButton.addEventListener('click', () => {
-              if (messageInput.value.trim() !== '') {
-                // Get current time
-                const now = new Date();
-                const hours = now.getHours();
-                const minutes = now.getMinutes();
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                const formattedHours = hours % 12 || 12;
-                const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-                const timeString = `${formattedHours}:${formattedMinutes} ${ampm}`;
-                
-                // Create message element
-                const messageDiv = document.createElement('div');
-                messageDiv.className = 'message user-message';
-                messageDiv.innerHTML = `
-                  ${messageInput.value}
-                  <div class="message-time">${timeString}</div>
-                `;
-                
-                // Add to chat container
-                chatMessages.appendChild(messageDiv);
-                
-                // Clear input
-                messageInput.value = '';
-                
-                // Scroll to bottom
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-                
-                // Simulate admin response after a delay
-                setTimeout(() => {
-                  const adminResponse = document.createElement('div');
-                  adminResponse.className = 'message admin-message';
-                  adminResponse.innerHTML = `
-                    感謝您的訊息！我們的團隊將盡快回覆您的問題。
-                    <div class="message-time">${formattedHours}:${formattedMinutes + 1} ${ampm}</div>
-                  `;
-                  
-                  chatMessages.appendChild(adminResponse);
-                  chatMessages.scrollTop = chatMessages.scrollHeight;
-                }, 1000);
-              }
-            });
-          }, 0);
+          <div id="messages-container">
+            <div class="message admin-message">
+              您好！我是管理員-P仔，有什麼可以幫助您的嗎？
+              <div class="message-time">10:30 AM</div>
+            </div>
+          </div>
+          
+          <div id="typing-indicator" class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+      </ion-content>
+      
+      <ion-footer>
+
+          <ion-textarea placeholder="輸入訊息..." id="message-input"  auto-grow></ion-textarea>
+          <ion-icon name="paper-plane" class="send-button" id="send-button"></ion-icon>
+
+      </ion-footer>
+    `;
+
+    // Initialize listeners after the component is connected
+    setTimeout(() => this.initializeListeners(), 0);
+  }
+  
+  initializeListeners() {
+    const sendButton = this.querySelector('#send-button');
+    const messageInput = this.querySelector('#message-input');
+    
+    if (sendButton && messageInput) {
+      sendButton.addEventListener('click', () => this.sendChatMessage());
+      
+      messageInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
+          this.sendChatMessage();
         }
+      });
+    }
+  }
+
+  sendChatMessage() {
+    const messageInput = this.querySelector('#message-input');
+    if (!messageInput) return;
+    
+    const message = messageInput.value.trim();
+    
+    if (message) {
+      // Add user message to chat
+      this.addMessage(message, true);
+      
+      // Clear input
+      messageInput.value = '';
+      
+      // Simulate admin response
+      this.simulateAdminResponse(message);
+    }
+  }
+
+  addMessage(text, isUser = true) {
+    const messagesContainer = this.querySelector('#messages-container');
+    if (!messagesContainer) return;
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${isUser ? 'user-message' : 'admin-message'}`;
+    messageDiv.innerHTML = `
+      ${text}
+      <div class="message-time">${this.getCurrentTime()}</div>
+    `;
+    
+    messagesContainer.appendChild(messageDiv);
+    
+    // Scroll to the bottom
+    const content = this.closest('ion-content');
+    if (content) content.scrollToBottom(300);
+  }
+
+  getCurrentTime() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 || 12;
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+  }
+
+  simulateAdminResponse(userMessage) {
+    this.showTypingIndicator();
+
+    const thinkingTime = 1000 + Math.random() * 2000;
+    setTimeout(() => {
+      this.hideTypingIndicator();
+      let response = '';
+      const lowerMessage = userMessage.toLowerCase();
+      
+      if (lowerMessage.includes('你好') || lowerMessage.includes('hi') || lowerMessage.includes('hello')) {
+        response = '您好！請問有什麼可以幫到您嗎？';
+      } else if (lowerMessage.includes('課程')) {
+        response = '我們只提供從網上得到的資源分享 Python 課程，您可以在「All Classes」頁面查看所有課程。';
+      } else {
+        response = '感謝您的訊息！我們的團隊將盡快處理您的問題。如果您有更多問題，請隨時告訴我。';
       }
       
+      this.addMessage(response, false);
+    }, thinkingTime);
+  }
+
+  showTypingIndicator() {
+    const typingIndicator = this.querySelector('#typing-indicator');
+    if (typingIndicator) typingIndicator.classList.add('active');
+  }
+
+  hideTypingIndicator() {
+    const typingIndicator = this.querySelector('#typing-indicator');
+    if (typingIndicator) typingIndicator.classList.remove('active');
+  }
+}
+
       // Define custom elements
       customElements.define('page-one', PageOne);
       customElements.define('page-two', PageTwo);
