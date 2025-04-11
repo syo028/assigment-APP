@@ -18,8 +18,8 @@
   href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
 
   <link rel="stylesheet" href="theme.css" />
-  <link rel="stylesheet" href="common.css" />
-
+  <link rel="stylesheet" href="common.css"/>
+  <link rel="stylesheet" href="style.css"/>
 
 
   </head>
@@ -914,147 +914,73 @@
       }
       
       class PageFour extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = `
-      <ion-header>
-        <ion-toolbar color="primary">
-          <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
-          </ion-buttons>
-          <ion-title style="color: white; font-weight: bold;">聯絡管理員</ion-title>
-        </ion-toolbar>
-      </ion-header>
+        connectedCallback() {
+          this.innerHTML = `
+            <ion-header>
+              <ion-toolbar color="primary">
+                <ion-buttons slot="start">
+                  <ion-back-button></ion-back-button>
+                </ion-buttons>
+                <ion-title style="color: white; font-weight: bold;">聯絡管理員</ion-title>
+              </ion-toolbar>
+            </ion-header>
 
-      <ion-content>
-        <div class="chat-container">
-          <div class="admin-info">
-            <div class="admin-avatar">管</div>
-            <div>
-              <div><strong>管理員-P仔</strong></div>
-              <div class="admin-status">下線 • 通常在幾分鐘內回覆</div>
-            </div>
-          </div>
-          
-          <div id="messages-container">
-            <div class="message admin-message">
-              您好！我是管理員-P仔，有什麼可以幫助您的嗎？
-              <div class="message-time">10:30 AM</div>
-            </div>
-          </div>
-          
-          <div id="typing-indicator" class="typing-indicator">
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-          </div>
+            <ion-content>
+              <div class="chat-container">
+                <div class="admin-info">
+                  <div class="admin-avatar">管</div>
+                  <div>
+                    <div><strong>管理員-P仔</strong></div>
+                    <div class="admin-status">下線 • 通常在幾分鐘內回覆</div>
+                  </div>
+                </div>
+                
+                <div id="messages-container">
+                  <div class="message admin-message">
+                    您好！我是管理員-P仔，有什麼可以幫助您的嗎？
+                    <div class="message-time">10:30 AM</div>
+                  </div>
+                </div>
+                
+                <div id="typing-indicator" class="typing-indicator">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
         </div>
-      </ion-content>
-      
-      <ion-footer>
+      </div>
+    </ion-content>
+        <ion-footer>
+            <ion-item lines="none"class="border-top">
+             
+                <ion-textarea placeholder="輸入訊息..." id="message-input">  </ion-textarea>            
+                <ion-icon name="paper-plane" class="send-button" id="send-button"></ion-icon>
 
-          <ion-textarea placeholder="輸入訊息..." id="message-input"  auto-grow></ion-textarea>
-          <ion-icon name="paper-plane" class="send-button" id="send-button"></ion-icon>
+              
+            </ion-item> 
+        </ion-footer>
 
-      </ion-footer>
-    `;
+          `;
 
-    // Initialize listeners after the component is connected
-    setTimeout(() => this.initializeListeners(), 0);
-  }
-  
-  initializeListeners() {
-    const sendButton = this.querySelector('#send-button');
-    const messageInput = this.querySelector('#message-input');
-    
-    if (sendButton && messageInput) {
-      sendButton.addEventListener('click', () => this.sendChatMessage());
-      
-      messageInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' && !event.shiftKey) {
-          event.preventDefault();
-          this.sendChatMessage();
+          // Initialize listeners after the component is connected
+          setTimeout(() => this.initializeListeners(), 0);
         }
-      });
-    }
-  }
-
-  sendChatMessage() {
-    const messageInput = this.querySelector('#message-input');
-    if (!messageInput) return;
-    
-    const message = messageInput.value.trim();
-    
-    if (message) {
-      // Add user message to chat
-      this.addMessage(message, true);
-      
-      // Clear input
-      messageInput.value = '';
-      
-      // Simulate admin response
-      this.simulateAdminResponse(message);
-    }
-  }
-
-  addMessage(text, isUser = true) {
-    const messagesContainer = this.querySelector('#messages-container');
-    if (!messagesContainer) return;
-
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${isUser ? 'user-message' : 'admin-message'}`;
-    messageDiv.innerHTML = `
-      ${text}
-      <div class="message-time">${this.getCurrentTime()}</div>
-    `;
-    
-    messagesContainer.appendChild(messageDiv);
-    
-    // Scroll to the bottom
-    const content = this.closest('ion-content');
-    if (content) content.scrollToBottom(300);
-  }
-
-  getCurrentTime() {
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    const formattedHours = hours % 12 || 12;
-    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-    return `${formattedHours}:${formattedMinutes} ${ampm}`;
-  }
-
-  simulateAdminResponse(userMessage) {
-    this.showTypingIndicator();
-
-    const thinkingTime = 1000 + Math.random() * 2000;
-    setTimeout(() => {
-      this.hideTypingIndicator();
-      let response = '';
-      const lowerMessage = userMessage.toLowerCase();
-      
-      if (lowerMessage.includes('你好') || lowerMessage.includes('hi') || lowerMessage.includes('hello')) {
-        response = '您好！請問有什麼可以幫到您嗎？';
-      } else if (lowerMessage.includes('課程')) {
-        response = '我們只提供從網上得到的資源分享 Python 課程，您可以在「All Classes」頁面查看所有課程。';
-      } else {
-        response = '感謝您的訊息！我們的團隊將盡快處理您的問題。如果您有更多問題，請隨時告訴我。';
+        
+        initializeListeners() {
+          const sendButton = this.querySelector('#send-button');
+          const messageInput = this.querySelector('#message-input');
+          
+          if (sendButton && messageInput) {
+            sendButton.addEventListener('click', () => sendChatMessage());
+            
+            messageInput.addEventListener('keydown', (event) => {
+              if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendChatMessage();
+              }
+            });
+          }
+        }
       }
-      
-      this.addMessage(response, false);
-    }, thinkingTime);
-  }
-
-  showTypingIndicator() {
-    const typingIndicator = this.querySelector('#typing-indicator');
-    if (typingIndicator) typingIndicator.classList.add('active');
-  }
-
-  hideTypingIndicator() {
-    const typingIndicator = this.querySelector('#typing-indicator');
-    if (typingIndicator) typingIndicator.classList.remove('active');
-  }
-}
 
       // Define custom elements
       customElements.define('page-one', PageOne);
